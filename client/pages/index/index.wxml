@@ -2,12 +2,12 @@
 <template name="fileList">
   <view class='list-item'>
     <image src="http://img.sc115.com/uploads2/sc/png/3771/31.png" class='file-icon'></image>
-    <view style='margin-left:200rpx;display:block'>
+    <view class='text-box'>
       <text class='file-name'> {{fileName}} </text>
       <text class="file-time"> {{uploadTime}}</text>
     </view>
   </view>
 </template>
 <view class="container" style='padding:15rpx'>
-  <template is="fileList" wx:for="{{filelist.data}}" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
+  <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
 </view>
