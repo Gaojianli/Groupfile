@@ -19,3 +19,19 @@
 .usermotto {
   margin-top: 200px;
 }
+.file-icon{
+  height: 160rpx;
+  width: 160rpx;
+  float:left;
+}
+
+.list-item{
+  border:1px solid #eeeeee;
+  width: 100%;
+  box-shadow: 2px 2px 2px #eeeeee;
+}
+
+text.file-name{
+  font-size: 36rpx;
+  margin-left: 40rpx;
+}
