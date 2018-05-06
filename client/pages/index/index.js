@@ -7,7 +7,11 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    filelist:{
+      empty:true,
+      data:[]
+    }
   },
   //事件处理函数
   bindViewTap: function() {
@@ -42,6 +46,24 @@ Page({
         }
       })
     }
+    //获取文件列表
+    this.setData({
+      filelist:{
+        empty:false,
+        data:[
+          {
+            id:1,
+            fileName:"我是文件名",
+            uploadTime:"2018-2-3 15：32"
+          },
+          {
+            id:2,
+            fileName:"我是文件二号",
+            uploadTime:"time"
+          }
+        ]
+      }
+    })
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -50,5 +72,5 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
 })

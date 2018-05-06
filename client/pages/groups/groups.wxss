@@ -1,0 +1,29 @@
+/* pages/groups/groups.wxss */
+image.file-icon{
+  height: 160rpx;
+  width: 160rpx;
+  float: left;
+}
+
+.list-item{
+  border:1px solid #eeeeee;
+  width: 98%;
+  padding: 10rpx;
+  margin-bottom: 15rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  box-shadow: 2px 2px 2px #eeeeee;
+}
+
+text.file-name{
+  font-size: 36rpx;
+  margin-left: 40rpx;
+  position: relative;
+  top:5rpx;
+}
+
+text.file-time{
+  font-size: 20rpx;
+  position: relative;
+  bottom: 5rpx;
+}

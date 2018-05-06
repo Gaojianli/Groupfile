@@ -11,9 +11,9 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.98",
+	"libVersion": "2.0.0",
 	"appid": "wxb23cf79ae1526b93",
-	"projectname": "%E7%BE%A4%E6%96%87%E4%BB%B6",
+	"projectname": "GroupFile",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
