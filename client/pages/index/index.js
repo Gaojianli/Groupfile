@@ -46,6 +46,7 @@ Page({
         }
       })
     }
+    //获取文件列表
     this.setData({
       filelist:{
         empty:false,
@@ -53,6 +54,10 @@ Page({
           {
             fileName:"我是文件名",
             uploadTime:"2018-2-3 15：32"
+          },
+          {
+            fileName:"我是文件二号",
+            uploadTime:"time"
           }
         ]
       }
