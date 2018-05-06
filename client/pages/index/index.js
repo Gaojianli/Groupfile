@@ -52,10 +52,12 @@ Page({
         empty:false,
         data:[
           {
+            id:1,
             fileName:"我是文件名",
             uploadTime:"2018-2-3 15：32"
           },
           {
+            id:2,
             fileName:"我是文件二号",
             uploadTime:"time"
           }

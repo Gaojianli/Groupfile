@@ -28,6 +28,8 @@ image.file-icon{
 .list-item{
   border:1px solid #eeeeee;
   width: 98%;
+  display: flex;
+  flex-direction: row;
   padding: 10rpx;
   margin-bottom: 15rpx;
   margin-left: 20rpx;
@@ -35,15 +37,20 @@ image.file-icon{
   box-shadow: 2px 2px 2px #eeeeee;
 }
 
+view.text-box{
+  display:flex;
+  flex-direction:column;
+  margin-left:20rpx;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
 text.file-name{
   font-size: 36rpx;
-  margin-left: 40rpx;
-  position: relative;
-  top:5rpx;
+  margin-top:-15rpx;
 }
 
 text.file-time{
   font-size: 20rpx;
-  position: relative;
-  bottom: 5rpx;
+  color: #bdbdbd;
 }
