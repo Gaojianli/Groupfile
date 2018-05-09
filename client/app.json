@@ -2,7 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/test/test"
+    "pages/groups/groups"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -15,15 +15,15 @@
     "color": "#fff",
     "selectedColor": "#fff",
     "backgroundColor": "#51A8DD",
-    "position":"top",
+    "position": "top",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "我的文件"
       },
       {
-        "pagePath": "pages/logs/logs",
-        "text": "日志"
+        "pagePath": "pages/groups/groups",
+        "text": "群组"
       }
     ]
   }

@@ -1,4 +1,4 @@
-<!--index.wxml-->
+<!--pages/groups/groups.wxml-->
 <template name="fileList">
   <view class='list-item'>
     <image src="http://img.sc115.com/uploads2/sc/png/3771/31.png" class='file-icon'></image>
