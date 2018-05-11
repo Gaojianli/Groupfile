@@ -30,17 +30,17 @@ let jscode2session = (code) => {
     })
 }
 module.exports = async (ctx, next) => {
-    // let session = JSON.parse(await jscode2session(ctx.query['code']));
-    // if (session["errcode"]) {
-    //     console.log("error:" + JSON.stringify(session) + "|" + ctx.query['code']);
-    //     ctx.response.type = "json";
-    //     ctx.response.body = JSON.stringify({
-    //         error: session["errcode"],
-    //         errmsg: "invalid code"
-    //     });
-    //     await next();
-    //     return;
-    // }
+    let session = JSON.parse(await jscode2session(ctx.query['code']));
+    if (session["errcode"]) {
+        console.log("error:" + JSON.stringify(session) + "|" + ctx.query['code']);
+        ctx.response.type = "json";
+        ctx.response.body = JSON.stringify({
+            error: session["errcode"],
+            errmsg: "invalid code"
+        });
+        await next();
+        return;
+    }
     let session = {openid: "DEMO",session_key: "SESSIONKEY"}
     let user_info = await user.find_user_by_openid(session.openid);
     if (user_info) {
