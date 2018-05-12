@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/groups/groups"
+    "pages/groups/groups",
+    "pages/exit/exit"
   ],
   "window": {
     "backgroundTextStyle": "light",
