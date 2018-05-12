@@ -1,0 +1,42 @@
+groupfile
+    |- user_info
+    |   |- _id
+    |   |- openid
+    |   |- session_key
+    |   |- group_list
+    |   |   |- // A list of group_info _id
+    |   |- file_list
+    |   |   |- // A list of file_info _id
+    |   |- password
+    |   |- uuid
+    |   |- unionid
+    |   |- avatar_url
+    |   |- full_info
+    |   |   |- nick_name
+    |   |   |- gender
+    |   |   |- city
+    |   |   |- province
+    |   |   |- country
+    |- file_info
+    |   |- _id
+    |   |- name
+    |   |- upload_time
+    |   |- upload_user_id
+    |   |- real_url
+    |   |- download_user_list
+    |   |   |- // A list of the _id who download it
+    |- group_info
+    |   |- _id
+    |   |- openGId
+    |   |- file_list
+    |   |   |- // A list of file_info _id
+    |- session_cookie_list
+    |   |- _id
+    |   |- session_cookie
+    |   |- available
+    |   |- user_id
+    |   |- last_check_time
+    |- log
+    |   |- _id
+    |   |- type
+    |   |- data
