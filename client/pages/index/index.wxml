@@ -8,6 +8,9 @@
     </view>
   </view>
 </template>
-<view class="container" style='padding:15rpx'>
+<view class="container" style='padding:15rpx' wx:if="{{loginStatus}}">
+  <view class="userinfo" wx:if="{{!hasUserInfo && canIUse}}">
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取用户信息 </button>
+  </view>
   <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
 </view>
