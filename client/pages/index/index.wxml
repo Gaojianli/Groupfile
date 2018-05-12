@@ -8,7 +8,7 @@
     </view>
   </view>
 </template>
-<view class="container" style='padding:15rpx' wx:if="{{app.loginStatus}}">
+<view class="container" style='padding:15rpx' wx:if="{{loginStatus}}">
   <view class="userinfo" wx:if="{{!hasUserInfo && canIUse}}">
     <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取用户信息 </button>
   </view>
