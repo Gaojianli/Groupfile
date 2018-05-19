@@ -43,8 +43,18 @@ let update_cookie = (session_cookie,type, user_id)=>{
 let remove_userid = (userid, type) => {
     return session_cookie.remove({user_id: userid, available: type});
 }
+let get_user = (cookie)=>{
+    return new Promise((rec,rej)=>{
+        session_cookie.findOne({session_cookie: cookie}).populate('user_id').exec((err,rew)=>{
+            if(err) console.log(err);
+            if(global.conf.debug) console.log(rew);
+            rec(rew.user_id);
+        })
+    })
+}
 module.exports = {
     new_cookie: new_cookie,
     update_cookie: update_cookie,
-    remove_userid: remove_userid
+    remove_userid: remove_userid,
+    get_user: get_user
 }

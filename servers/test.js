@@ -65,12 +65,12 @@
 //         })
 //     });
 // })
-let config = require("./config");
-let s = require('./sql/session');
-let a = async ()=>{
-console.log(await s.new_cookie({type: 'web'}));
-}
-a();
+// let config = require("./config");
+// let s = require('./sql/session');
+// let a = async ()=>{
+// console.log(await s.new_cookie({type: 'web'}));
+// }
+// a();
 // let mongoose = require('mongoose');
 // let db = require('./sql/db');
 // mongoose.connect(global.conf.mongodb.url,{ config: { autoIndex: false } });
@@ -99,3 +99,30 @@ a();
 //     console.log(await random);
 // }
 // a();
+
+const Koa = require('koa');
+const app = new Koa();
+
+const one = (ctx, next) => {
+  console.log('>> one');
+  console.log(ctx);
+  console.log('<< one');
+}
+
+const two = (ctx, next) => {
+  console.log('>> two');
+  next();
+  console.log('<< two');
+}
+
+const three = (ctx, next) => {
+  console.log('>> three');
+  next();
+  console.log('<< three');
+}
+
+app.use(one);
+app.use(two);
+app.use(three);
+
+app.listen(3000);

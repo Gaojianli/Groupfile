@@ -29,8 +29,18 @@ let update_user = (lim, data) => {
         });
     })
 };
+let find_file_list = (user_id,first,num) =>{
+    return new Promise((rec,rej)=>{
+        user.findById(user_id).populate('file_list').exec((err,rew)=>{
+            if(err) console.log(err);
+            if(global.conf.debug) console.log(rew);
+            rec(rew.file_list.slice(-num-first,-first).reverse());
+        })
+    })
+}
 module.exports = {
     find_user_by_openid: find_user_by_openid,
     add_user: add_user,
-    update_user: update_user
+    update_user: update_user,
+    find_file_list:find_file_list
 }
