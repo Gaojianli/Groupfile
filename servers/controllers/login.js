@@ -41,7 +41,7 @@ module.exports = async (ctx, next) => {
         await next();
         return;
     }
-    let session = {openid: "DEMO",session_key: "SESSIONKEY"}
+    //let session = {openid: "DEMO",session_key: "SESSIONKEY"}
     let user_info = await user.find_user_by_openid(session.openid);
     if (user_info) {
         await session_token.remove_userid(user_info.id,'wx');
