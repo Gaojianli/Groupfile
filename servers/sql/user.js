@@ -38,9 +38,20 @@ let find_file_list = (user_id,first,num) =>{
         })
     })
 }
+let add_file = (user_id,file_id) => {
+    return new Promise((rec,rej)=>{
+        user.findById(user_id).exec((err,rew)=>{
+            if(err) console.log(err);
+            if(global.conf.debug) console.log(rew);
+            rew.file_list.push(file_id);
+            rec(rew.save());
+        })
+    })
+}
 module.exports = {
     find_user_by_openid: find_user_by_openid,
     add_user: add_user,
     update_user: update_user,
-    find_file_list:find_file_list
+    find_file_list:find_file_list,
+    add_file: add_file
 }
