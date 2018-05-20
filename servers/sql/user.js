@@ -36,7 +36,7 @@ let find_file_list = (user_id,first,num) =>{
             exec((err,rew)=>{
                 if(err) console.log(err);
                 if(global.conf.debug) console.log(rew);
-                rec(rew.file_list.slice(-num-first,-first).reverse());
+                rec(rew.file_list);
         })
     })
 }

@@ -46,9 +46,9 @@ module.exports = async(ctx, next) => {
     }else{
         files = await user_info.find_file_list(user._id,post.first,post.num);
     }
-    let empty=false;
+    let empty=true;
     if(files){
-        empty = true;
+        empty = false;
     }
     ctx.response.body = JSON.stringify({success:true,files:files,empty:empty});
 }
