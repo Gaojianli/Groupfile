@@ -32,7 +32,7 @@ let update_user = (lim, data) => {
 let find_file_list = (user_id,first,num) =>{
     return new Promise((rec,rej)=>{
         user.findById(user_id).
-            populate({path:"file_list",select:"-real_url -upload_user_id"}).
+            populate({path:"file_list",select:"-real_url -upload_user_id -download_user_list"}).
             exec((err,rew)=>{
                 if(err) console.log(err);
                 if(global.conf.debug) console.log(rew);
