@@ -25,6 +25,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    cookie:null,
+    loginStatus:false
   }
 })
