@@ -1,7 +1,7 @@
 /*
 API getFileList
 调用类型 POST
-参数 JSON
+参数 POST
 {
     "session_cookie": "YOUR SESSION COOKIE",
     "openGid": "dXXXXXXX",    //可选，不传则默认查本人可见的文件。
@@ -33,7 +33,7 @@ let session_token = require('../sql/session');
 let file = require('../sql/file');
 
 module.exports = async(ctx, next) => {
-    let post = JSON.parse(ctx.request.body);
+    let post = ctx.request.body;
     let user = await session_token.get_user(post.session_cookie);
     if(!user){
         ctx.response.body = JSON.stringify({success:false,error:'cookie过期，请重试'});

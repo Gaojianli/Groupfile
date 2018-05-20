@@ -13,7 +13,7 @@ API log
 */
 let log = require('../sql/log');
 module.exports = async(ctx, next) => {
-    await log(JSON.parse(ctx.request.body));
+    await log(ctx.request.body);
     ctx.response.type = "json";
     ctx.response.body = JSON.stringify({success:true});
     next();
