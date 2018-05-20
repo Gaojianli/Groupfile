@@ -23,6 +23,7 @@ let file_info = new Schema({
     upload_time: Date,
     upload_user_id: {type: mongoose.Schema.ObjectId, ref: "user_info"},
     real_url: String,
+    type: String,
     download_user_list: [{type: mongoose.Schema.ObjectId, ref: "user_info"}]
 });
 let group_info = new Schema({

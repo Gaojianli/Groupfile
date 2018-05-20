@@ -28,10 +28,10 @@ COOKIE失效
     }
     如果请求的区域没有文件，就会返回空files。
 */
-let user_info = require('../sql/user');
+
 let session_token = require('../sql/session');
 let file = require('../sql/file');
-
+let user_info = require('../sql/user');
 module.exports = async(ctx, next) => {
     let post = ctx.request.body;
     let user = await session_token.get_user(post.session_cookie);
@@ -46,14 +46,5 @@ module.exports = async(ctx, next) => {
     }else{
         files = await user_info.find_file_list(user._id,post.first,post.num);
     }
-    let out = [];
-    for(a_file in files){
-        out.push({
-            file_id: a_file._id,
-            name: a_file.name,
-            upload_time: a_file.upload_time,
-            download_num: a_file.download_user_list.length
-        })
-    }
-    ctx.response.body = JSON.stringify({success:true,files:out});
+    ctx.response.body = JSON.stringify({success:true,files:files});
 }

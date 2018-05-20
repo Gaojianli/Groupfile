@@ -1,7 +1,7 @@
 /*
 API log
 调用类型 POST
-参数 JSON
+参数 POST
 {
     "type":"error"\"warning"\"info"\"log",
     "data": Object

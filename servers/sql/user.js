@@ -31,10 +31,15 @@ let update_user = (lim, data) => {
 };
 let find_file_list = (user_id,first,num) =>{
     return new Promise((rec,rej)=>{
-        user.findById(user_id).populate('file_list').exec((err,rew)=>{
-            if(err) console.log(err);
-            if(global.conf.debug) console.log(rew);
-            rec(rew.file_list.slice(-num-first,-first).reverse());
+        user.findById(user_id).
+            populate({path: "file_list",select: "_id"}).
+            populate({path: "file_list",select: "name"}).
+            populate({path: "file_list",select: "upload_time"}).
+            populate({path: "filr_list",select: "type"}).
+            exec((err,rew)=>{
+                if(err) console.log(err);
+                if(global.conf.debug) console.log(rew);
+                rec(rew.file_list.slice(-num-first,-first).reverse());
         })
     })
 }
