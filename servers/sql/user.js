@@ -32,7 +32,7 @@ let update_user = (lim, data) => {
 let find_file_list = (user_id,first,num) =>{
     return new Promise((rec,rej)=>{
         user.findById(user_id).
-            populate({path:"file_list",select:"-real_url -upload_user_id -download_user_list"}).
+            populate({path:"file_list",select:"-real_url -upload_user_id -download_user_list -size"}).
             exec((err,rew)=>{
                 if(err) console.log(err);
                 if(global.conf.debug) console.log(rew);
@@ -42,11 +42,36 @@ let find_file_list = (user_id,first,num) =>{
 }
 let add_file = (user_id,file_id) => {
     return new Promise((rec,rej)=>{
+        user.findById(user_id).exec(async(err,rew)=>{
+            if(err) console.log(err);
+            if(global.conf.debug) console.log(rew);
+            if(rew.file_list.indexOf(file_id) == -1){
+                rew.file_list.push(file_id);
+            }
+            await rew.save();
+            rec(rew);
+        })
+    })
+}
+let add_group = (user_id,group_id)=>{
+    return new Promise((rec,rej)=>{
+        user.findById(user_id).exec(async(ree,rew)=>{
+            if(err) console.log(err);
+            if(global.conf.debug) console.log(rew);
+            if(rew.group_list.indexOf(group_id) == -1){
+                rew.group_list.push(group_id);
+            }
+            await rew.save();
+            rec(rew);
+        })
+    })
+}
+let find_group_list = (user_id) => {
+    return new Promise((rec,rej)=>{
         user.findById(user_id).exec((err,rew)=>{
             if(err) console.log(err);
             if(global.conf.debug) console.log(rew);
-            rew.file_list.push(file_id);
-            rec(rew.save());
+            rec(rew.group_list);
         })
     })
 }
@@ -55,5 +80,7 @@ module.exports = {
     add_user: add_user,
     update_user: update_user,
     find_file_list:find_file_list,
-    add_file: add_file
+    add_file: add_file,
+    add_group: add_group,
+    find_group_list: find_group_list
 }

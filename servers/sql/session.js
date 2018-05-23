@@ -20,7 +20,7 @@ let new_cookie = async (type, userid) => {
         user_id: userid,
         last_check_time: new Date()
     })
-    a_cookie.save();
+    await a_cookie.save();
     return token;
 }
 let update_cookie = (session_cookie,type, user_id)=>{

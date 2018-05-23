@@ -24,10 +24,11 @@ let file_info = new Schema({
     upload_user_id: {type: mongoose.Schema.ObjectId, ref: "user_info"},
     real_url: String,
     type: String,
+    size: Number,
     download_user_list: [{type: mongoose.Schema.ObjectId, ref: "user_info"}]
 });
 let group_info = new Schema({
-    openGId: String,
+    openGid: String,
     file_list: [{type: mongoose.Schema.ObjectId, ref: "file_info"}]
 });
 let session_cookie_list = new Schema({
