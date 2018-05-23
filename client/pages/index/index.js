@@ -76,6 +76,11 @@ Page({
       hasUserInfo: true
     })
   },
+  showDetails:(e)=>{
+    wx.navigateTo({
+      url: '/pages/details/details?id=' + e.currentTarget.dataset.id + "&type=" + e.currentTarget.dataset.type + "&name=" + e.currentTarget.dataset.name + "&time=" + e.currentTarget.dataset.time,
+    })
+  }
 })
 
 const loginCus = (that) => {
@@ -92,7 +97,6 @@ const loginCus = (that) => {
             method: "GET",
             success: res => {
               if (res) {
-                console.log(res.data)
                 app.globalData.cookie = res.data.session_cookie
                 app.globalData.loginStatus = true
                 that.setData({
@@ -133,7 +137,6 @@ const getFileList = (cookie, that, start, num ) => {
         },
         method: "POST",
         success: res => {
-          console.log(res.data);
           if (res.data.success && !res.data.empty) {
             let fileList = [];
             for (let i of res.data.files) {
@@ -150,7 +153,6 @@ const getFileList = (cookie, that, start, num ) => {
                 data:fileList
               }
             })
-            console.log(fileList)
           }
         }
       })

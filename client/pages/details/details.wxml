@@ -1,0 +1,13 @@
+<!--pages/details/details.wxml-->
+<view class="body" wx:if="{{loaded}}">
+  <view>
+    <image src='https://asdf.zhr1999.club/resource/icons/{{type}}.svg' class='icon'></image>
+  </view>
+  <view class='text'>
+    <text class='name'>{{name}}</text>
+    <text class='time'>上传时间：{{time}}</text>
+  </view>
+  <button class='button' wx:if="{{!downloaded}}" bindtap='download' style='margin-top: 60rpx;'>下载</button>
+  <button class='button' wx:if="{{downloaded}}" style='margin-top: 60rpx;'>打开</button>
+  <button class='button' open-type="share"  style='margin-top: 30rpx;'>分享</button>
+</view>
