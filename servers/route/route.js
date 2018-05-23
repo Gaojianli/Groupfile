@@ -6,5 +6,7 @@ module.exports = compose([
     route.get('/hello', require('../controllers/hello')),
     route.post('/api/log',require('../controllers/log')),
     route.get('/api/login',require('../controllers/login')),
-    route.post('/api/getFileList',require('../controllers/getFileList'))
+    route.post('/api/getFileList',require('../controllers/getFileList')),
+    route.post('/api/openShare',require('../controllers/openShare')),
+    route.post('/api/getFileInfo',require('../controllers//getFileInfo'))
 ]);

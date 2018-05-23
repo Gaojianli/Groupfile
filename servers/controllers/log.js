@@ -1,7 +1,7 @@
 /*
 API log
 调用类型 POST
-参数 JSON
+参数 POST
 {
     "type":"error"\"warning"\"info"\"log",
     "data": Object
@@ -13,7 +13,14 @@ API log
 */
 let log = require('../sql/log');
 module.exports = async(ctx, next) => {
-    await log(JSON.parse(ctx.request.body));
+    try {  
+        if (typeof JSON.parse(ctx.request.body.data) == "object") {  
+            ctx.request.body.data = JSON.parse(ctx.request.body.data);
+            await log(ctx.request.body); 
+        }  
+    } catch(e) {
+        await log(ctx.request.body); 
+    }
     ctx.response.type = "json";
     ctx.response.body = JSON.stringify({success:true});
     next();
