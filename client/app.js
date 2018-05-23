@@ -4,8 +4,10 @@ App({
   //错误退出实现
   quitFlag: false,
 
-  onLaunch: function () {
-    // 登录
+  onLaunch: function (opt) {
+    if (opt.scene == 1044) {
+      app.globalData.shareTicket = opt.shareTicket
+    }
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -18,15 +20,13 @@ App({
             }
           })
         }
-        else{
-          loginCus()
-        }
       }
     })
   },
   globalData: {
     userInfo: null,
-    cookie:null,
-    loginStatus:false
+    cookie: null,
+    loginStatus: false,
+    shareTicket: null
   }
 })

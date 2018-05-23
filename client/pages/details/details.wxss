@@ -1,0 +1,33 @@
+/* pages/details/details.wxss */
+.body{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+}
+.icon{
+  width:400rpx;
+  height:400rpx;
+}
+.text{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+text.name{
+  font-size: 1.2rem;
+  text-align: center;
+}
+text.time{
+  font-size: 0.8rem;
+  color: gray;
+  text-align: left;
+}
+.button{
+  color: #51A8DD;
+  width: 500rpx;
+  align-self: flex-end;
+}
