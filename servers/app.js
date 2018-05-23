@@ -1,9 +1,10 @@
 let Koa = require("koa");
-let bodyParser = require('koa-bodyparser');
+// let bodyParser = require('koa-bodyparser');
+let bodyParser = require('koa-body');
 let config = require('./config');
 let route = require('./route/route');
 const app = new Koa();
-app.use(bodyParser());
+app.use(bodyParser({multipart: true}));
 app.use(async(ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
     await next();
