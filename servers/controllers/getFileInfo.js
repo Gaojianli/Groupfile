@@ -50,6 +50,7 @@ module.exports = async(ctx,next)=>{
         return;
     }
     let d = new Date(file.upload_time);
+    let out = {};
     out.upload_time = d.Format('yy-MM-dd hh:mm');
     if(file.size < 1024){
         out.size = file.size + 'B';
