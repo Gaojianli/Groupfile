@@ -30,7 +30,7 @@ let add_file = async (name,uploader_id,size,real_url) =>{
     await a_file.save();
     return a_file._id;
 }
-let find_file_real_url = (file_id,user_id)=>{
+let find_file_add_list = (file_id,user_id)=>{
     return new Promise((rec,rej)=>{
         file_info.findById(file_id).exec(async(err,rew)=>{
             if(err) console.log(err);
@@ -39,12 +39,12 @@ let find_file_real_url = (file_id,user_id)=>{
                 rew.download_user_list.push(user_id);
             }
             await rew.save();
-            rec(rew.real_url);
+            rec(rew);
         })
     })
 }
 module.exports = {
     find_file: find_file,
     add_file: add_file,
-    find_file_real_url: find_file_real_url
+    find_file_add_list: find_file_add_list
 }

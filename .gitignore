@@ -1,2 +1,3 @@
 servers/uploadFile/*
 !servers/uploadFile/mkdir
+servers/test.js

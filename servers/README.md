@@ -311,3 +311,48 @@ PS: web端session就可以用cookie的方式存储了,这部分还没做
 暂时这样 ,这样是不可以的,应该指向下一个页面
 
 或者使用js上传文件(雾
+
+#### download
+##### 说明
+地址: /api/download
+
+调用: POST
+
+说明: 用来下载文件
+
+参数:
+
+|参数名|必须|备注|
+|:-|:-|:-|
+|session_cookie|是|login得到的cookie|
+|file_id|是|文件的ID|
+
+返回:
+
+成功时:文件
+
+失败时:JSON
+
+|参数名|说明|
+|:-|:-|
+|success|false:失败|
+|error|失败的时候会返回的错误信息|
+
+##### 样例
+
+请求:
+
+POST https://example.com/api/download
+
+session_cookie=COOKIE&file_id=FILE_ID
+
+返回:
+
+失败时:
+
+```JSON
+{
+    "success":false,
+    "error":"cookie过期，请重试"
+}
+```

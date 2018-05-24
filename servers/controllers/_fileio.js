@@ -20,11 +20,14 @@ let upload_file = (file)=>{
         }
     })
 }
-let download_file = (real_url) => {
+let download_file = (real_url,real_name) => {
     return new Promise((rec,rej)=>{
         let file = real_url.split('://');
         if(file[0] == 'local'){
-            rec(file[1]);
+            const reader = fs.createReadStream(file[1]);
+            const stream = fs.createWriteStream(path.join(os.tmpdir(), real_name));
+            reader.pipe(stream);
+            rec(path.join(os.tmpdir(), real_name));
         }else{
             throw "未定义的文件保存方式";
         }
