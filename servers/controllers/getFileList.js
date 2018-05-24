@@ -17,12 +17,13 @@ COOKIE失效
 成功
     {
         "success": true,
+        "empty": false,
         "files":[
             {
                 "file_id": "文件的ID",
                 "name": "文件名",
-                "upload_time": "上传时间",  //2018-05-19T07:32:52.717Z 直接扔进 Date()就变对象了
-                "download_num": 10        //这个文件被下载了几次
+                "type": "文件类型",
+                "upload_time": "上传时间"
             }，{。。。。}
         ]
     }
