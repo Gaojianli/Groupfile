@@ -82,6 +82,7 @@ GET https://demo.com/api/login?code=asdfasdfasdf
 |error|只在出错时返回<br>错误信息|
 |empty|只在成功时返回<br>文件列表是否为空|
 |files|文件列表 是个list 具体元素格式见下表|
+
 files里的元素:
 |成员|说明|
 |:-|:-|
@@ -122,4 +123,64 @@ session_cookie=YOUR SESSION COOKIE
 |参数名|必须|备注|
 |:-|:-|:-|
 |session_cookie|是|login得到的cookie|
-|openGid|是|
+|openGid|是|从一个微信给的API拿到的|
+|file_id|是|文件的id|
+返回:
+|参数名|说明|
+|:-|:-|
+|success|true:成功<br>false:失败|
+|file|一个file对象 具体定义看下表|
+|error|只在失败时返回<br>错误信息|
+
+file对象(跟上面那个基本一样 更详细)
+|成员|说明|
+|:-|:-|
+|file_id|文件的ID<br>我不嫌烦,再传一下|
+|name|文件名|
+|upload_time|文件的上传时间 格式:yy-MM-dd hh:mm|
+|type|文件类型|
+|size|文件大小已经自带单位,直接显示来就好 单位: B KB MB 小数点后两位精度|
+|download_num|下载人数|
+PS: 可能以后会加上几个下载人的头像
+##### 样例
+请求:
+POST https://demo.com/api/openShare
+session_cookie=我是cookie&openGid=我是openGid&file_id=我是文件id
+返回:
+成功时:
+```JSON
+{
+    "success": true,
+    "file": {
+        "file_id": "THE FILE ID",
+        "name": "THE FILE NAME",
+        "upload_time": "",
+        "type": "",
+        "size": "KB",
+        "download_num": 10
+    }
+}
+```
+失败时:
+```JSON
+{
+    "success":false,
+    "error":"cookie过期，请重试"
+}
+```
+#### getFileInfo
+##### 说明
+地址: /api/getFileInfo
+调用: POST
+说明: 通过file_id得到详细的文件信息
+|参数名|必须|备注|
+|:-|:-|:-|
+|session_cookie|是|login得到的cookie|
+|file_id|是|文件的id|
+返回: 
+我跟你说跟上面的一样 你会打我么? (逃
+#### upload
+##### 说明
+地址: /api/upload
+调用: POST-multipart
+说明: 暂时没写完,写完再更
