@@ -38,7 +38,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
     return fmt;
 }
 module.exports = async(ctx,next)=>{
-    let post = ctx.require.body;
+    let post = ctx.request.body;
     let user = await session_token.get_user(post.session_cookie);
     if(!user){
         ctx.response.body = JSON.stringify({success:false,error:'cookie过期，请重试'});
@@ -50,6 +50,7 @@ module.exports = async(ctx,next)=>{
         return;
     }
     let d = new Date(file.upload_time);
+    let out = {};
     out.upload_time = d.Format('yy-MM-dd hh:mm');
     if(file.size < 1024){
         out.size = file.size + 'B';
