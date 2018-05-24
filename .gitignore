@@ -1,0 +1,2 @@
+servers/uploadFile/*
+!servers/uploadFile/mkdir
