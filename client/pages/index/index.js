@@ -45,7 +45,7 @@ Page({
       })
     }
     if (!app.globalData.loginStatus) {
-      await loginCus(this);
+      await checkLoginStatus(this);
       if (app.globalData.loginStatus == false) {
         wx.showToast({
           title: '登录失败！',
@@ -59,11 +59,11 @@ Page({
           }
         })
       }
-      await getFileList(app.globalData.cookie,this);
+      await getFileList(app.globalData.cookie, this);
       wx.hideLoading()
     }
     else {
-      await getFileList(app.globalData.cookie,this);
+      await getFileList(app.globalData.cookie, this);
       wx.hideLoading()
     }
     //获取文件列表
@@ -76,50 +76,14 @@ Page({
       hasUserInfo: true
     })
   },
-  showDetails:(e)=>{
+  showDetails: (e) => {
     wx.navigateTo({
-      url: '/pages/details/details?id=' + e.currentTarget.dataset.id + "&type=" + e.currentTarget.dataset.type + "&name=" + e.currentTarget.dataset.name + "&time=" + e.currentTarget.dataset.time,
+      url: '/pages/details/details?id=' + e.currentTarget.dataset.id,
     })
   }
 })
 
-const loginCus = (that) => {
-  return new Promise(resolve => {
-    wx.login({
-      success: res => {
-        if (res.code) {
-          //发起网络请求
-          wx.request({
-            url: 'https://asdf.zhr1999.club/api/login',
-            data: {
-              code: res.code
-            },
-            method: "GET",
-            success: res => {
-              if (res) {
-                app.globalData.cookie = res.data.session_cookie
-                app.globalData.loginStatus = true
-                that.setData({
-                  loginStatus: true,
-                })
-              }
-              resolve(true);
-            }
-          })
-        } else {
-          console.log('登录失败！' + res.errMsg)
-          that.setData({
-            loginStatus: false,
-          })
-          app.globalData.loginStatus = false
-          resolve(false);
-        }
-      }
-    })
-  })
-}
-
-const getFileList = (cookie, that, start, num ) => {
+const getFileList = (cookie, that, start, num) => {
   return new Promise(resolve => {
     if (!app.globalData.loginStatus)
       return
@@ -140,7 +104,7 @@ const getFileList = (cookie, that, start, num ) => {
           if (res.data.success && !res.data.empty) {
             let fileList = [];
             for (let i of res.data.files) {
-              let data= {};
+              let data = {};
               data.fileName = i.name
               data.uploadTime = i.upload_time
               data.type = i.type
@@ -150,7 +114,7 @@ const getFileList = (cookie, that, start, num ) => {
             that.setData({
               filelist: {
                 empty: false,
-                data:fileList
+                data: fileList
               }
             })
           }
@@ -158,5 +122,18 @@ const getFileList = (cookie, that, start, num ) => {
       })
     }
     resolve(true);
+  })
+}
+
+let checkLoginStatus = (that) => {
+  return new Promise(res => {
+    if (app.globalData.loginStatus)
+      that.setData({
+        loginStatus: true
+      })
+    else
+      that.setData({
+        loginStatus: false
+      })
   })
 }

@@ -33,13 +33,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
 					"name": "群进入",
 					"pathName": "pages/details/details",
-					"query": "name=123&type=txt",
+					"query": "id=5b01144818ff933141ac0773",
 					"scene": "1044",
 					"shareInfo": {
 						"groupName": "测试模拟群0",
