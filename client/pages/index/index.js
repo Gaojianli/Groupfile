@@ -1,33 +1,32 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+var util = require("../../utils/util.js")
+import regeneratorRuntime from "../../utils/runtime.js"
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
+    userInfo: "",
+    loginStatus: false,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    filelist:{
-      empty:true,
-      data:[]
+    filelist: {
+      empty: true,
+      data: []
     }
   },
   //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
+  onLoad: async function () {
+    wx.showLoading({
+      title: '加载中',
     })
-  },
-  onLoad: function () {
+    //
+    //获取用户信息
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
+    } else if (this.data.canIUse) {
       app.userInfoReadyCallback = res => {
         this.setData({
           userInfo: res.userInfo,
@@ -35,7 +34,6 @@ Page({
         })
       }
     } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo
@@ -46,26 +44,31 @@ Page({
         }
       })
     }
-    //获取文件列表
-    this.setData({
-      filelist:{
-        empty:false,
-        data:[
-          {
-            id:1,
-            fileName:"我是文件名",
-            uploadTime:"2018-2-3 15：32"
-          },
-          {
-            id:2,
-            fileName:"我是文件二号",
-            uploadTime:"time"
+    if (!app.globalData.loginStatus) {
+      await checkLoginStatus(this);
+      if (app.globalData.loginStatus == false) {
+        wx.showToast({
+          title: '登录失败！',
+          icon: 'loading',
+          duration: 1500,
+          success: () => {
+            // wx.reLaunch({
+            //   url: '../pages/exit/exit',
+            // })
+            console.log("退出");
           }
-        ]
+        })
       }
-    })
+      await getFileList(app.globalData.cookie, this);
+      wx.hideLoading()
+    }
+    else {
+      await getFileList(app.globalData.cookie, this);
+      wx.hideLoading()
+    }
+    //获取文件列表
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -73,4 +76,64 @@ Page({
       hasUserInfo: true
     })
   },
+  showDetails: (e) => {
+    wx.navigateTo({
+      url: '/pages/details/details?id=' + e.currentTarget.dataset.id,
+    })
+  }
 })
+
+const getFileList = (cookie, that, start, num) => {
+  return new Promise(resolve => {
+    if (!app.globalData.loginStatus)
+      return
+    else {
+      if (!start)
+        start = 0
+      else if (!num)
+        num = 10
+      wx.request({
+        url: 'https://asdf.zhr1999.club/api/getFileList',
+        data: {
+          session_cookie: cookie,
+          first: start,
+          num: 10
+        },
+        method: "POST",
+        success: res => {
+          if (res.data.success && !res.data.empty) {
+            let fileList = [];
+            for (let i of res.data.files) {
+              let data = {};
+              data.fileName = i.name
+              data.uploadTime = i.upload_time
+              data.type = i.type
+              data.id = i._id
+              fileList.push(data);
+            }
+            that.setData({
+              filelist: {
+                empty: false,
+                data: fileList
+              }
+            })
+          }
+        }
+      })
+    }
+    resolve(true);
+  })
+}
+
+let checkLoginStatus = (that) => {
+  return new Promise(res => {
+    if (app.globalData.loginStatus)
+      that.setData({
+        loginStatus: true
+      })
+    else
+      that.setData({
+        loginStatus: false
+      })
+  })
+}

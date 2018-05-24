@@ -14,6 +14,36 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const loginCus = (app) => {
+  return new Promise(resolve => {
+    wx.login({
+      success: res => {
+        if (res.code) {
+          wx.request({
+            url: 'https://asdf.zhr1999.club/api/login',
+            data: {
+              code: res.code
+            },
+            method: "GET",
+            success: res => {
+              if (res) {
+                app.globalData.cookie = res.data.session_cookie
+                app.globalData.loginStatus = true
+              }
+              resolve(true);
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+          app.globalData.loginStatus = false
+          resolve(false);
+        }
+      }
+    })
+  })
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  loginCus:loginCus
 }

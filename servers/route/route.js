@@ -1,10 +1,12 @@
-const route = require('koa-route');
+let route = require('koa-route');
 const compose = require('koa-compose');
-const index = require('../controllers/index');
-const hello = require('../controllers/hello')
-
 
 module.exports = compose([
-    route.get('/', index),
-    route.get('/hello', hello)
+    route.get('/', require('../controllers/index')),
+    route.get('/hello', require('../controllers/hello')),
+    route.post('/api/log',require('../controllers/log')),
+    route.get('/api/login',require('../controllers/login')),
+    route.post('/api/getFileList',require('../controllers/getFileList')),
+    route.post('/api/openShare',require('../controllers/openShare')),
+    route.post('/api/getFileInfo',require('../controllers//getFileInfo'))
 ]);

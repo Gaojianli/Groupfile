@@ -1,13 +1,16 @@
 <!--index.wxml-->
 <template name="fileList">
-  <view class='list-item'>
-    <image src="http://img.sc115.com/uploads2/sc/png/3771/31.png" class='file-icon'></image>
+  <view class='list-item' bindtap='showDetails' data-type="{{type}}" id="{{id}}" data-id="{{id}}" data-name="{{fileName}}" data-time='{{uploadTime}}'>
+    <image src="https://asdf.zhr1999.club/resource/icons/{{type}}.svg" class='file-icon'></image>
     <view class='text-box'>
       <text class='file-name'> {{fileName}} </text>
       <text class="file-time"> {{uploadTime}}</text>
     </view>
   </view>
 </template>
-<view class="container" style='padding:15rpx'>
+<view class="container" style='padding:15rpx' wx:if="{{loginStatus}}">
+  <view class="userinfo" wx:if="{{!hasUserInfo && canIUse}}">
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取用户信息 </button>
+  </view>
   <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
 </view>

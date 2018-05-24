@@ -20,9 +20,9 @@
   margin-top: 200px;
 }
 image.file-icon{
-  height: 160rpx;
-  width: 160rpx;
-  float: left;
+  height: 140rpx;
+  width: 140rpx;
+  margin: 15rpx 20rpx 15rpx
 }
 
 .list-item{
@@ -40,14 +40,14 @@ image.file-icon{
 view.text-box{
   display:flex;
   flex-direction:column;
-  margin-left:20rpx;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 text.file-name{
   font-size: 36rpx;
   margin-top:-15rpx;
+
 }
 
 text.file-time{
