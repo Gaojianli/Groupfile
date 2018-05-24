@@ -11,7 +11,7 @@ App({
       await utils.loginCus(this)
     if (opt.scene == 1044) {
       this.globalData.shareTicket = opt.shareTicket
-    }
+      }
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {

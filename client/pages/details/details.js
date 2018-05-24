@@ -23,7 +23,7 @@ Page({
   onLoad: async function (options) {
     if (!app.globalData.loginStatus)
       await utils.loginCus(app)
-    wx.request({
+    await wx.request({
       url: 'https://asdf.zhr1999.club/api/getFileInfo',
       method: "POST",
       data: {
@@ -31,13 +31,12 @@ Page({
         file_id: options.id
       },
       success: res => {
-        console.log(res)
-        if (res.statusCode==200) {
+        if (res.data.success) {
           this.setData({
-            type: options.type,
+            type: res.data.file.type,
             id: options.id,
-            time: options.time,
-            name: options.name,
+            time: res.data.file.upload_time,
+            name: res.data.file.name,
             loaded: true
           })
         }
@@ -45,7 +44,13 @@ Page({
           console.error(res)
       }
     })
-
+    if (app.globalData.shareTicket)
+      wx.getShareInfo({
+        shareTicket: app.globalData.shareTicket,
+        success(res){
+          console.log(res)
+        }
+      })
   },
 
   /**
