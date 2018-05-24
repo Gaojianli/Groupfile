@@ -1,5 +1,7 @@
 // pages/details/details.js
 import regeneratorRuntime from "../../utils/runtime.js"
+import utils from "../../utils/util.js"
+const app = getApp()
 var file = {}
 Page({
 
@@ -18,15 +20,37 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    file = options
-    this.setData({
-      type: options.type,
-      id: options.id,
-      time: options.time,
-      name: options.name,
-      loaded: true
+  onLoad: async function (options) {
+    if (!app.globalData.loginStatus)
+      await utils.loginCus(app)
+    await wx.request({
+      url: 'https://asdf.zhr1999.club/api/getFileInfo',
+      method: "POST",
+      data: {
+        session_cookie: app.globalData.cookie,
+        file_id: options.id
+      },
+      success: res => {
+        if (res.data.success) {
+          this.setData({
+            type: res.data.file.type,
+            id: options.id,
+            time: res.data.file.upload_time,
+            name: res.data.file.name,
+            loaded: true
+          })
+        }
+        else
+          console.error(res)
+      }
     })
+    if (app.globalData.shareTicket)
+      wx.getShareInfo({
+        shareTicket: app.globalData.shareTicket,
+        success(res){
+          console.log(res)
+        }
+      })
   },
 
   /**
