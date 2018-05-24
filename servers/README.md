@@ -3,7 +3,9 @@
 #### log
 ##### 使用说明
 地址: /api/log
+
 调用: POST
+
 说明: 用来返回一些乱七八糟的记录,方便调试(虽然一直没怎么用)
 
 |参数名|必须|备注|
@@ -19,16 +21,23 @@
 
 ##### 样例
 请求:
+
 POST https://example.com/api/log
+
 type=warning&data={"data":"我爱上了杜甫",{"err":false,"massage":"但是杜甫不爱我"}}
+
 返回:
+
 成功时
+
 ```JSON
 {
     "success": true,
 }
 ```
+
 失败时
+
 ```JSON
 {
     "success": false,
@@ -38,7 +47,9 @@ type=warning&data={"data":"我爱上了杜甫",{"err":false,"massage":"但是杜
 #### login
 ##### 使用说明
 地址: /api/login
+
 调用: GET
+
 说明: 用于后台和微信服务器进行交互,获得用户信息,并按照微信开发要求生成专用的session_cookie用于用户交互
 
 |参数名|必须|备注|
@@ -56,9 +67,13 @@ type=warning&data={"data":"我爱上了杜甫",{"err":false,"massage":"但是杜
 
 ##### 样例
 请求:
+
 GET https://example.com/api/login?code=asdfasdfasdf
+
 返回:
+
 成功时
+
 ```JSON
 {
     "sess":true,
@@ -74,8 +89,11 @@ GET https://example.com/api/login?code=asdfasdfasdf
 ```
 #### getFileList
 ##### 说明
+
 地址: /api/getFileList
+
 调用: POST
+
 说明: 用于获取用户/群组下的文件清单
 
 |参数名|必须|备注|
@@ -105,10 +123,15 @@ files里的元素:
 
 ##### 样例
 请求:
+
 POST https://example.com/api/getFileList
+
 session_cookie=YOUR SESSION COOKIE
+
 返回:
+
 成功时
+
 ```JSON
 {
     "success": true,
@@ -123,7 +146,9 @@ session_cookie=YOUR SESSION COOKIE
     ]
 }
 ```
+
 失败时
+
 ```JSON
 {
     "success": false,
@@ -132,7 +157,9 @@ session_cookie=YOUR SESSION COOKIE
 ```
 #### openShare
 地址: /api/openShare
+
 调用: POST
+
 说明: 在分享到群组的文件被打开始,调用用以获得详细文件信息,并将文件添加到用户和群组列表
 
 |参数名|必须|备注|
@@ -163,10 +190,15 @@ file对象(跟上面那个基本一样 更详细)
 PS: 可能以后会加上几个下载人的头像
 ##### 样例
 请求:
+
 POST https://example.com/api/openShare
+
 session_cookie=我是cookie&openGid=我是openGid&file_id=我是文件id
+
 返回:
+
 成功时:
+
 ```JSON
 {
     "success": true,
@@ -180,7 +212,9 @@ session_cookie=我是cookie&openGid=我是openGid&file_id=我是文件id
     }
 }
 ```
+
 失败时:
+
 ```JSON
 {
     "success":false,
@@ -190,7 +224,9 @@ session_cookie=我是cookie&openGid=我是openGid&file_id=我是文件id
 #### getFileInfo
 ##### 说明
 地址: /api/getFileInfo
+
 调用: POST
+
 说明: 通过file_id得到详细的文件信息
 
 |参数名|必须|备注|
@@ -199,9 +235,13 @@ session_cookie=我是cookie&openGid=我是openGid&file_id=我是文件id
 |file_id|是|文件的id|
 
 返回: 
+
 我跟你说跟上面的一样 你会打我么? (逃
+
 #### upload
 ##### 说明
 地址: /api/upload
+
 调用: POST-multipart
+
 说明: 暂时没写完,写完再更
