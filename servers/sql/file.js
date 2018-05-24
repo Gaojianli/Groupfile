@@ -13,17 +13,24 @@ let find_file = (file_id) => {
 }
 let add_file = async (name,uploader_id,size,real_url) =>{
     let now = new Date;
+    let name_in = name.split('.');
+    let type = name_in.pop();
+    name_in = name.slice(0,name.length-type.length+1);
+    for(let i of name_in){
+        
+    }
     let a_file = new file_info({
-        name: name,
+        name: name_in,
         upload_time: now,
         upload_user_id: uploader_id,
+        type: type,
         size: size,
         real_url: real_url
     })
     await a_file.save();
-    return true;
+    return a_file._id;
 }
-let find_file_real_url = (file_id,user_id)=>{
+let find_file_add_list = (file_id,user_id)=>{
     return new Promise((rec,rej)=>{
         file_info.findById(file_id).exec(async(err,rew)=>{
             if(err) console.log(err);
@@ -32,12 +39,12 @@ let find_file_real_url = (file_id,user_id)=>{
                 rew.download_user_list.push(user_id);
             }
             await rew.save();
-            rec(rew.real_url);
+            rec(rew);
         })
     })
 }
 module.exports = {
     find_file: find_file,
     add_file: add_file,
-    find_file_real_url: find_file_real_url
+    find_file_add_list: find_file_add_list
 }
