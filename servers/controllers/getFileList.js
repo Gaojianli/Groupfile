@@ -32,6 +32,7 @@ COOKIE失效
 
 let session_token = require('../sql/session');
 let file = require('../sql/file');
+let group_info = require('../sql/group');
 let user_info = require('../sql/user');
 Date.prototype.Format = function (fmt) { //author: meizz 
     var o = {
@@ -57,8 +58,7 @@ module.exports = async(ctx, next) => {
     }
     let files = [];
     if(post.openGid){
-        // TODO:
-        files = await user_info.find_file_list(user._id,post.first,post.num);
+        files = await group_info.find_Gfile_list(post.openGid,post.first,post.num);
     }else{
         files = await user_info.find_file_list(user._id,post.first,post.num);
     }

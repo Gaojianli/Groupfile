@@ -155,6 +155,58 @@ session_cookie=YOUR SESSION COOKIE
     "error": "cookie过期，请重试"
 }
 ```
+
+#### getGroupList
+##### 说明
+地址: /api/getGroupList
+
+调用: POST
+
+说明: 获得用户所属的群组列表 返回openGid
+
+|参数名|必须|备注|
+|:-|:-|:-|
+|session_cookie|是|login得到的cookie|
+
+返回:
+
+|参数名|说明|
+|:-|:-|
+|success|true:成功<br>false:失败|
+|num|群组数量|
+|group_list|群组openGid组成的数组|
+|error|只在失败时返回<br>错误信息|
+
+##### 样例
+请求:
+
+POST https://example.com/api/getGroupFile
+
+session_cookie=我是cookie
+
+返回:
+
+成功时:
+
+```JSON
+{
+    "success":true,
+    "num":1,
+    "group_list":[
+        "afkjabjdshjhjadhjf"
+    ]
+}
+```
+
+失败时:
+
+```JSON
+{
+    "success":false,
+    "error":"cookie过期，请重试"
+}
+```
+
 #### openShare
 地址: /api/openShare
 
@@ -165,8 +217,9 @@ session_cookie=YOUR SESSION COOKIE
 |参数名|必须|备注|
 |:-|:-|:-|
 |session_cookie|是|login得到的cookie|
-|openGid|是|从一个微信给的API拿到的|
 |file_id|是|文件的id|
+|encryptedData|是|加密后的openGid|
+|vi|是|加密向量|
 
 返回:
 
