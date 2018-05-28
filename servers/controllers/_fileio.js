@@ -12,9 +12,7 @@ let upload_file = (file) => {
         let conf = global.conf.upload.conf;
         let random_name = await random;
         if (global.conf.upload.type == 'loacl') {
-            const reader = fs.createReadStream(file.path);
-            const stream = fs.createWriteStream(join(conf.path, random_name));
-            reader.pipe(stream);
+            fs.writeFileSync(join(conf.path, random_name), fs.readFileSync(file.path));
             rec('local://' + join(conf.path, random_name));
         } else {
             throw "未定义的文件保存方式";
@@ -26,8 +24,8 @@ let download_file = (real_url, real_name) => {
         let file = real_url.split('://');
         let conf = global.conf.upload.conf;
         if (file[0] == 'local') {
-            fs.writeFileSync(join(conf.path, real_name), fs.readFileSync(file[1]));
-            rec(join(conf.path, real_name));
+            fs.writeFileSync(join(os.tmpdir(), real_name), fs.readFileSync(file[1]));
+            rec(join(os.tmpdir(), real_name));
         } else {
             throw "未定义的文件保存方式";
         }
