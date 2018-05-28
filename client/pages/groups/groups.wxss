@@ -1,13 +1,35 @@
-/* pages/groups/groups.wxss */
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
 image.file-icon{
-  height: 160rpx;
-  width: 160rpx;
-  float: left;
+  height: 140rpx;
+  width: 140rpx;
+  margin: 15rpx 20rpx 15rpx
 }
 
 .list-item{
   border:1px solid #eeeeee;
   width: 98%;
+  display: flex;
+  flex-direction: row;
   padding: 10rpx;
   margin-bottom: 15rpx;
   margin-left: 20rpx;
@@ -15,15 +37,20 @@ image.file-icon{
   box-shadow: 2px 2px 2px #eeeeee;
 }
 
+view.text-box{
+  display:flex;
+  flex-direction:column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
 text.file-name{
   font-size: 36rpx;
-  margin-left: 40rpx;
-  position: relative;
-  top:5rpx;
+  margin-top:-15rpx;
+
 }
 
 text.file-time{
   font-size: 20rpx;
-  position: relative;
-  bottom: 5rpx;
+  color: #bdbdbd;
 }
