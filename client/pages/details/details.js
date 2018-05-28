@@ -44,7 +44,7 @@ Page({
             loaded: true
           })
           file.id = options.id
-          file.type = res.datafile.type
+          file.type = res.data.file.type
         }
         else
           console.error(res)
