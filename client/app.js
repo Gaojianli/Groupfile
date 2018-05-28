@@ -11,7 +11,10 @@ App({
       await utils.loginCus(this)
     if (opt.scene == 1044) {
       this.globalData.shareTicket = opt.shareTicket
-      }
+    }
+    if (this.loginStatusCallback) {
+      this.loginStatusCallback(this.globalData.shareTicket);
+    }
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
