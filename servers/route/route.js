@@ -10,6 +10,6 @@ module.exports = compose([
     route.post('/api/openShare', require('../controllers/openShare')),
     route.post('/api/getFileInfo', require('../controllers//getFileInfo')),
     route.post('/api/upload', require('../controllers/upload')),
-    route.get(' /api/download', require('../controllers/download')),
+    route.get('/api/download', require('../controllers/download')),
     route.post('/api/getGroupList', require("../controllers/getGroupList"))
 ]);

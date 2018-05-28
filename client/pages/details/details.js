@@ -4,8 +4,9 @@ import utils from "../../utils/util.js"
 const app = getApp()
 var file = {
   id: null,
-  url: null,
-  type:null
+  name:null,
+  url: null,  
+  type: null
 }
 Page({
 
@@ -44,6 +45,7 @@ Page({
             loaded: true
           })
           file.id = options.id
+          file.name = res.data.file.name
           file.type = res.data.file.type
         }
         else
@@ -88,7 +90,7 @@ Page({
     return {
       title: '我给你分享了文件' + file.name + ',快来看看吧!',
       path: '/pages/details/details?id=' + file.id + "&type=" + file.type + "&name=" + file.name + "&time=" + file.time,
-      imageUrl: 'https://asdf.zhr1999.club/resource/icons/' + file.type + '.svg',
+      imageUrl: 'https://asdf.zhr1999.club/resource/pngs/' + file.type + '.png',
       success(res) {
         wx.showShareMenu({
           withShareTicket: true,
