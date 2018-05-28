@@ -20,7 +20,7 @@ COOKIE失效
         "empty": false,
         "files":[
             {
-                "file_id": "文件的ID",
+                "_id": "文件的ID",
                 "name": "文件名",
                 "type": "文件类型",
                 "upload_time": "上传时间"
@@ -34,7 +34,7 @@ let session_token = require('../sql/session');
 let file = require('../sql/file');
 let group_info = require('../sql/group');
 let user_info = require('../sql/user');
-Date.prototype.Format = function (fmt) { //author: meizz 
+Date.prototype.Format = function(fmt) { //author: meizz 
     var o = {
         "M+": this.getMonth() + 1, //月份 
         "d+": this.getDate(), //日 
@@ -46,29 +46,35 @@ Date.prototype.Format = function (fmt) { //author: meizz
     };
     if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
     for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
 module.exports = async(ctx, next) => {
     let post = ctx.request.body;
     let user = await session_token.get_user(post.session_cookie);
-    if(!user){
-        ctx.response.body = JSON.stringify({success:false,error:'cookie过期，请重试'});
+    if (!user) {
+        ctx.response.body = JSON.stringify({ success: false, error: 'cookie过期，请重试' });
         return;
     }
     let files = [];
-    if(post.openGid){
-        files = await group_info.find_Gfile_list(post.openGid,post.first,post.num);
-    }else{
-        files = await user_info.find_file_list(user._id,post.first,post.num);
+    if (post.openGid) {
+        files = await group_info.find_Gfile_list(post.openGid, post.first, post.num);
+    } else {
+        files = await user_info.find_file_list(user._id, post.first, post.num);
     }
-    let empty=true;
-    if(files){
+    let empty = true;
+    if (files) {
         empty = false;
     }
-    for (const i of files) {
-        let d = new Date(i.upload_time);
-        i.upload_time = d.Format('yy-MM-dd hh:mm');
+    let tmp = [];
+    for (key of files) {
+        let a_file = {
+            _id: key._id,
+            name: key.name,
+            type: key.type,
+            upload_time: key.upload_time.Format('yy-MM-dd hh:mm')
+        };
+        tmp.push(a_file);
     }
-    ctx.response.body = JSON.stringify({success:true,files:files,empty:empty});
+    ctx.response.body = JSON.stringify({ success: true, files: tmp, empty: empty });
 }

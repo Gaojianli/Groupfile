@@ -19,34 +19,34 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    //
-    //获取用户信息
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      app.userInfoReadyCallback = res => {
+    app.loginStatusCallback = async (token) => {
+      //
+      //获取用户信息
+      if (app.globalData.userInfo) {
         this.setData({
-          userInfo: res.userInfo,
+          userInfo: app.globalData.userInfo,
           hasUserInfo: true
         })
-      }
-    } else {
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
+      } else if (this.data.canIUse) {
+        app.userInfoReadyCallback = res => {
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
         }
-      })
-    }
-    if (!app.globalData.loginStatus) {
+      } else {
+        wx.getUserInfo({
+          success: res => {
+            app.globalData.userInfo = res.userInfo
+            this.setData({
+              userInfo: res.userInfo,
+              hasUserInfo: true
+            })
+          }
+        })
+      }
       await checkLoginStatus(this);
-      if (app.globalData.loginStatus == false) {
+      if (!app.globalData.loginStatus) {
         wx.showToast({
           title: '登录失败！',
           icon: 'loading',
@@ -58,15 +58,15 @@ Page({
             console.log("退出");
           }
         })
+        await getFileList(app.globalData.cookie, this);
+        wx.hideLoading()
       }
-      await getFileList(app.globalData.cookie, this);
-      wx.hideLoading()
+      else {
+        await getFileList(app.globalData.cookie, this);
+        wx.hideLoading()
+      }
+      //获取文件列表
     }
-    else {
-      await getFileList(app.globalData.cookie, this);
-      wx.hideLoading()
-    }
-    //获取文件列表
   },
   getUserInfo: function (e) {
     console.log(e)
@@ -85,12 +85,12 @@ Page({
 
 const getFileList = (cookie, that, start, num) => {
   return new Promise(resolve => {
-    if (!app.globalData.loginStatus)
-      return
-    else {
+    if (!app.globalData.loginStatus) {
+      resolve(false);
+    } else {
       if (!start)
         start = 0
-      else if (!num)
+      if (!num)
         num = 10
       wx.request({
         url: 'https://asdf.zhr1999.club/api/getFileList',
@@ -112,16 +112,14 @@ const getFileList = (cookie, that, start, num) => {
               fileList.push(data);
             }
             that.setData({
-              filelist: {
-                empty: false,
-                data: fileList
-              }
+              "filelist.empty": false,
+              "filelist.data": fileList
             })
           }
         }
       })
+      resolve(true);
     }
-    resolve(true);
   })
 }
 
@@ -135,5 +133,7 @@ let checkLoginStatus = (that) => {
       that.setData({
         loginStatus: false
       })
+    res(app.globalData.loginStatus);
   })
+  
 }

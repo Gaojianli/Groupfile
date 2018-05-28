@@ -1,4 +1,4 @@
-if(!global.conf){
+if (!global.conf) {
     global.conf = {};
 }
 global.conf.mongodb = {
@@ -14,9 +14,9 @@ global.conf.wxapp = {
     AppSecret: "84b204946f057a2d27989be0d5555121"
 }
 global.conf.debug = true;
-global.conf.upload={
-    type:'loacl',
-    conf:{
+global.conf.upload = {
+    type: 'local',
+    conf: {
         path: __dirname + '/uploadFile'
     }
 }
