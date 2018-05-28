@@ -1,13 +1,12 @@
 <!--pages/groups/groups.wxml-->
-<template name="fileList">
-  <view class='list-item'>
-    <image src="http://img.sc115.com/uploads2/sc/png/3771/31.png" class='file-icon'></image>
-    <view style='margin-left:200rpx;display:block'>
-      <text class='file-name'> {{fileName}} </text>
-      <text class="file-time"> {{uploadTime}}</text>
+<template name="group-list">
+  <view class='list-item' bindtap='showDetails' data-type="{{type}}" id="{{id}}" data-id="{{id}}" data-name="{{fileName}}" data-time='{{uploadTime}}'>
+    <image src="https://asdf.zhr1999.club/resource/icons/{{type}}.svg" class='file-icon'></image>
+    <view class='text-box'>
+      <open-data type="groupName" open-gid="{{openGId}}" />
     </view>
   </view>
 </template>
 <view class="container" style='padding:15rpx'>
-  <template is="fileList" wx:for="{{filelist.data}}" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
+  <template is="group-list" wx:for="{{groupList.group}}" wx:key="id" wx:if="{{!groupList.empty}}" data="{{...item}}"></template>
 </view>
