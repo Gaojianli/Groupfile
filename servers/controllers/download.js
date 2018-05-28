@@ -19,7 +19,7 @@ module.exports = async(ctx, next) => {
         return;
     }
     let file = await file_info.find_file_add_list(post.file_id, user._id);
-    let real_url = await download_file(fiel.real_url, file.name + '.' + file.type);
+    let real_url = await download_file(file.real_url, file.name + '.' + file.type);
     await send(ctx, path.basename(real_url), { root: path.dirname(real_url) });
     return;
 }
