@@ -26,6 +26,7 @@ const loginCus = (app) => {
             },
             method: "GET",
             success: res => {
+              console.log(res)
               if (res) {
                 app.globalData.cookie = res.data.session_cookie
                 app.globalData.loginStatus = true

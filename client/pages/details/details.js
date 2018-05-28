@@ -2,7 +2,11 @@
 import regeneratorRuntime from "../../utils/runtime.js"
 import utils from "../../utils/util.js"
 const app = getApp()
-var file = {}
+var file = {
+  id: null,
+  url: null,
+  type:null
+}
 Page({
 
   /**
@@ -39,6 +43,8 @@ Page({
             name: res.data.file.name,
             loaded: true
           })
+          file.id = options.id
+          file.type = res.datafile.type
         }
         else
           console.error(res)
@@ -47,8 +53,20 @@ Page({
     if (app.globalData.shareTicket)
       wx.getShareInfo({
         shareTicket: app.globalData.shareTicket,
-        success(res){
-          console.log(res)
+        success(res) {
+          wx.request({
+            url: 'https://asdf.zhr1999.club/api/openShare',
+            method: 'POST',
+            data: {
+              session_cookie: app.globalData.cookie,
+              file_id: options.id,
+              encryptedData: res.encryptedData,
+              vi: res.iv
+            },
+            success(res) {
+              console.log(res)
+            }
+          })
         }
       })
   },
@@ -78,9 +96,25 @@ Page({
       }
     }
   },
-  download: function () {
+  download: async function(){
+    await wx.downloadFile({
+      url: 'https://asdf.zhr1999.club/api/download?session_cookie=' + app.globalData.cookie + "&file_id=" + file.id,
+      success: res => {
+        console.log(res)
+        if (res.statusCode) {
+          file.url = res.tempFilePath
+        }
+      },
+    })
     this.setData({
       downloaded: true
+    })
+  },
+  open: () => {
+    console.log(file)
+    wx.openDocument({
+      filePath: file.url,
+      fileType:file.type
     })
   }
 })
