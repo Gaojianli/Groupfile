@@ -31,3 +31,6 @@ text.time{
   width: 500rpx;
   align-self: flex-end;
 }
+.progress{
+  width:600rpx;
+}

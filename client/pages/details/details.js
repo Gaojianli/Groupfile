@@ -15,7 +15,9 @@ Page({
    */
   data: {
     downloaded: false,
+    downloading: false,
     type: null,
+    percent:0,
     id: null,
     time: null,
     name: null,
@@ -105,6 +107,9 @@ Page({
 
   },
   onShareAppMessage: (res) => {
+    wx.showShareMenu({
+      withShareTicket: true
+    });
     return {
       title: '我给你分享了文件' + file.name + ',快来看看吧!',
       path: '/pages/details/details?id=' + file.id + "&type=" + file.type + "&name=" + file.name + "&time=" + file.time,
@@ -117,17 +122,29 @@ Page({
     }
   },
   download: async function () {
-    await wx.downloadFile({
+    const downloadTask =  wx.downloadFile({
       url: 'https://asdf.zhr1999.club/api/download?session_cookie=' + app.globalData.cookie + "&file_id=" + file.id,
       success: res => {
         console.log(res)
+        this.setData({
+          downloading: false,
+          downloaded: true
+        })
         if (res.statusCode) {
           file.url = res.tempFilePath
         }
       },
     })
-    this.setData({
-      downloaded: true
+    downloadTask.onProgressUpdate((res) => {
+      this.setData({
+        downloading: true,
+        percent: res.progress
+      })
+    })
+  },
+  goBack: ()=>{
+    wx.navigateBack({
+      delta: 1
     })
   },
   open: () => {

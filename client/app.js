@@ -7,6 +7,7 @@ App({
   quitFlag: false,
 
   onShow: async function (opt) {
+    console.log(opt.scene);
     if (!this.globalData.loginStatus)
       await utils.loginCus(this)
     if (this.loginStatusCallback) {
