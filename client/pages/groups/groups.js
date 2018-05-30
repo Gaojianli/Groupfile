@@ -24,7 +24,18 @@ Page({
         session_cookie:app.globalData.cookie
       },
       success:res=>{
-        console.log(res)
+        console.log(res);
+        let groupList = [];
+        for (let i of res.data.group_list){
+          let openGidList = {
+            id: i
+          }
+          groupList.push(openGidList);
+        }
+        this.setData({
+          "groupList.empty": res.data.num?false:true,
+          "groupList.group": groupList
+        })
       }
     })
   },
@@ -76,5 +87,10 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  showDetails: function(e) {
+    wx.navigateTo({
+      url: '/pages/groupFiles/groupFiles?id=' + e.currentTarget.dataset.id,
+    })
   }
 })

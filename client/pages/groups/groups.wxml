@@ -1,9 +1,9 @@
 <!--pages/groups/groups.wxml-->
 <template name="group-list">
-  <view class='list-item' bindtap='showDetails' data-type="{{type}}" id="{{id}}" data-id="{{id}}" data-name="{{fileName}}" data-time='{{uploadTime}}'>
-    <image src="https://asdf.zhr1999.club/resource/icons/{{type}}.svg" class='file-icon'></image>
+  <view class='list-item' bindtap='showDetails' data-type="group" id="{{id}}" data-id="{{id}}">
+    <image src="https://asdf.zhr1999.club/resource/icons/group.svg" class='file-icon'></image>
     <view class='text-box'>
-      <open-data type="groupName" open-gid="{{openGId}}" />
+      <open-data type="groupName" open-gid="{{id}}" />
     </view>
   </view>
 </template>

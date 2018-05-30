@@ -6,14 +6,18 @@ App({
   //错误退出实现
   quitFlag: false,
 
-  onLaunch:async function (opt) {
+  onShow: async function (opt) {
+    console.log(opt.scene);
     if (!this.globalData.loginStatus)
       await utils.loginCus(this)
+    if (this.loginStatusCallback) {
+      this.loginStatusCallback(this.globalData.loginStatus);
+    }
     if (opt.scene == 1044) {
       this.globalData.shareTicket = opt.shareTicket
-    }
-    if (this.loginStatusCallback) {
-      this.loginStatusCallback(this.globalData.shareTicket);
+      if (this.shareTicketCallback) {
+        this.shareTicketCallback(this.globalData.shareTicket);
+      }
     }
     wx.getSetting({
       success: res => {

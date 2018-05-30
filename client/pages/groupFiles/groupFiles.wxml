@@ -1,0 +1,13 @@
+<!--groupFiles.wxml-->
+<template name="fileList">
+  <view class='list-item' bindtap='showDetails' data-type="{{type}}" id="{{id}}" data-id="{{id}}" data-name="{{fileName}}" data-time='{{uploadTime}}'>
+    <image src="https://asdf.zhr1999.club/resource/icons/{{type}}.svg" class='file-icon'></image>
+    <view class='text-box'>
+      <text class='file-name'> {{fileName}} </text>
+      <text class="file-time"> {{uploadTime}}</text>
+    </view>
+  </view>
+</template>
+<view class="container" wx:if="{{loginStatus}}">
+  <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
+</view>

@@ -11,7 +11,7 @@ global.conf.mongodb = {
 }
 global.conf.wxapp = {
     AppID: "wxb23cf79ae1526b93",
-    AppSecret: "84b204946f057a2d27989be0d5555121"
+    AppSecret: "7a7d17d1f8c7d6e21bcf6a3b421ed361"
 }
 global.conf.debug = true;
 global.conf.upload = {

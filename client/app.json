@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/groups/groups",
     "pages/exit/exit",
-    "pages/details/details"
+    "pages/details/details",
+    "pages/groupFiles/groupFiles"
   ],
   "window": {
     "backgroundTextStyle": "light",
