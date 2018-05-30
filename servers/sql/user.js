@@ -66,7 +66,7 @@ let add_file = (user_id, file_id) => {
 }
 let add_group = (user_id, group_id) => {
     return new Promise((rec, rej) => {
-        user.findById(user_id).exec(async(ree, rew) => {
+        user.findById(user_id).exec(async(err, rew) => {
             if (err) console.log(err);
             if (global.conf.debug) console.log(rew);
             if (rew.group_list.indexOf(group_id) == -1) {
