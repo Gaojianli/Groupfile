@@ -53,7 +53,7 @@ module.exports = async(ctx, next) => {
         return;
     }
     let WXBizDataCrypt_new = new WXBizDataCrypt(global.conf.wxapp.AppID, user.session_key)
-    let openGid = WXBizDataCrypt_new.decryptData(post.encryptedData, post.iv);
+    let openGid = WXBizDataCrypt_new.decryptData(post.encryptedData, post.vi);
     let group = await group_info.find_group(openGid.openGId);
     let rec = await Promise.all([
         user_info.add_file(user._id, post.file_id),
