@@ -6,6 +6,7 @@ import regeneratorRuntime from "../../utils/runtime.js"
 Page({
   data: {
     userInfo: "",
+    openGid: "",
     loginStatus: false,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -15,9 +16,12 @@ Page({
     }
   },
   //事件处理函数
-  onLoad: async function () {
+  onLoad: async function (options) {
     wx.showLoading({
       title: '加载中',
+    })
+    this.setData({
+      openGid: options.id
     })
     app.loginStatusCallback = async (token) => {
       //
@@ -58,16 +62,16 @@ Page({
             console.log("退出");
           }
         })
-        await getFileList(app.globalData.cookie, this);
+        await getFileList(this.data.openGid,app.globalData.cookie, this);
         wx.hideLoading()
       }
       else {
-        await getFileList(app.globalData.cookie, this);
+        await getFileList(this.data.openGid,app.globalData.cookie, this);
         wx.hideLoading()
       }
       //获取文件列表
     }
-    if (app.globalData.cookie) {
+    if (app.globalData.cookie){
       app.loginStatusCallback(app.globalData.cookie);
     }
   },
@@ -86,7 +90,7 @@ Page({
   }
 })
 
-const getFileList = (cookie, that, start, num) => {
+const getFileList = (openGid,cookie, that, start, num) => {
   return new Promise(resolve => {
     if (!app.globalData.loginStatus) {
       resolve(false);
@@ -99,6 +103,7 @@ const getFileList = (cookie, that, start, num) => {
         url: 'https://asdf.zhr1999.club/api/getFileList',
         data: {
           session_cookie: cookie,
+          openGid: openGid,
           first: start,
           num: 10
         },
@@ -138,5 +143,5 @@ let checkLoginStatus = (that) => {
       })
     res(app.globalData.loginStatus);
   })
-  
+
 }

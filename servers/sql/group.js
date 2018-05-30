@@ -20,9 +20,9 @@ let find_group = (openGid) => {
         })
     })
 }
-let find_Gfile_list = (group_id, first, num) => {
+let find_Gfile_list = (openGid, first, num) => {
     return new Promise((rec, rej) => {
-        group_info.findById(group_id).
+        group_info.findOne({ openGid: openGid }).
         populate({ path: "file_list", select: "-real_url -upload_user_id -download_user_list -size" }).
         exec((err, rew) => {
             if (err) console.log(err);
