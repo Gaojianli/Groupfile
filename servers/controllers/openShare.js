@@ -57,8 +57,8 @@ module.exports = async(ctx, next) => {
     let group = await group_info.find_group(openGid.openGId);
     let rec = await Promise.all([
         user_info.add_file(user._id, post.file_id),
-        user_info.add_group(user._id, group._id),
-        group_info.add_Gfile(group._id, post.file_id),
+        user_info.add_group(user._id, group),
+        group_info.add_Gfile(group, post.file_id),
         file_info.find_file(post.file_id)
     ])
     let out = {};
