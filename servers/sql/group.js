@@ -27,7 +27,7 @@ let find_Gfile_list = (openGid, first, num) => {
         exec((err, rew) => {
             if (err) console.log(err);
             if (global.conf.debug) console.log(rew);
-            rec(rew);
+            rec(rew.file_list);
         })
     })
 }
