@@ -25,7 +25,7 @@ let user_info = require('../sql/user');
 let group_info = require('../sql/group');
 let session_token = require('../sql/session');
 let file_info = require('../sql/file');
-var WXBizDataCrypt = new(require('./_WXBizDataCrypt'))(global.conf.wxapp.AppID, global.conf.wxapp.AppSecret);
+var WXBizDataCrypt = require('./_WXBizDataCrypt');
 Date.prototype.Format = function(fmt) { //author: meizz 
     var o = {
         "M+": this.getMonth() + 1, //月份 
@@ -52,6 +52,7 @@ module.exports = async(ctx, next) => {
         ctx.response.body = JSON.stringify({ success: false, error: '文件ID无效，请检查' });
         return;
     }
+    let WXBizDataCrypt_new = new WXBizDataCrypt(global.conf.wxapp.AppID, user.session_key)
     let openGid = WXBizDataCrypt.decryptData(post.encryptedData, post.iv);
     let group = await group_info.find_group(openGid.openGId);
     let rec = await Promise.all([
