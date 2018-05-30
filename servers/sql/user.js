@@ -1,5 +1,3 @@
-import { Session } from 'inspector';
-
 let mongoose = require('mongoose');
 let db = require('./db');
 mongoose.connect(global.conf.mongodb.url, { config: { autoIndex: false } });
