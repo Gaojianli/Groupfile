@@ -34,9 +34,6 @@ let find_Gfile_list = (group_id, first, num) => {
 let add_Gfile = (group_id, file_id) => {
     return new Promise((rec, rej) => {
         group_info.findById(group_id).exec(async(err, rew) => {
-            if (!rew.file_list) {
-                rew.file_list = [];
-            }
             if (rew.file_list.indexOf(file_id) == -1) {
                 rew.file_list.push(file_id);
             }

@@ -79,10 +79,14 @@ let add_group = (user_id, group_id) => {
 }
 let find_group_list = (user_id) => {
     return new Promise((rec, rej) => {
-        user.findById(user_id).exec((err, rew) => {
+        user.findById(user_id).populate("group_list").exec((err, rew) => {
             if (err) console.log(err);
             if (global.conf.debug) console.log(rew);
-            rec(rew.group_list);
+            let out = [];
+            for (const i of rew.group_list) {
+                out.push(i.openGid);
+            }
+            rec(out);
         })
     })
 }

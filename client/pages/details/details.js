@@ -56,7 +56,7 @@ Page({
       console.log(sTicket);
       wx.getShareInfo({
         shareTicket: app.globalData.shareTicket,
-        success(res) {
+        success: res =>{
           console.log(res);
           wx.request({
             url: 'https://asdf.zhr1999.club/api/openShare',
@@ -67,7 +67,7 @@ Page({
               encryptedData: res.encryptedData,
               vi: res.iv
             },
-            success(res) {
+            success: res=>{
               if (res.data.success) {
                 this.setData({
                   type: res.data.file.type,
