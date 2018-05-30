@@ -14,7 +14,7 @@ App({
     }
     if (opt.scene == 1044) {
       this.globalData.shareTicket = opt.shareTicket
-      if (this.loginStatusCallback) {
+      if (this.shareTicketCallback) {
         this.shareTicketCallback(this.globalData.shareTicket);
       }
     }

@@ -26,11 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    if (!app.globalData.loginStatus) {
-      app.loginStatusCallback = async (token) => {
-        await utils.loginCus(app)
-      }
-    }else{
+    if (app.globalData.loginStatus) {
       wx.request({
         url: 'https://asdf.zhr1999.club/api/getFileInfo',
         method: "POST",
@@ -89,6 +85,9 @@ Page({
           })
         }
       })
+    }
+    if (app.globalData.shareTicket){
+      app.shareTicketCallback(app.globalData.shareTicket);
     }
   },
 
