@@ -60,10 +60,12 @@ Page({
         })
         await getFileList(app.globalData.cookie, this);
         wx.hideLoading()
+        wx.stopPullDownRefresh();
       }
       else {
         await getFileList(app.globalData.cookie, this);
         wx.hideLoading()
+        wx.stopPullDownRefresh();
       }
       //获取文件列表
     }
@@ -83,7 +85,14 @@ Page({
     wx.navigateTo({
       url: '/pages/details/details?id=' + e.currentTarget.dataset.id,
     })
-  }
+  },
+  onPullDownRefresh: ()=>{
+    wx.showLoading({
+      title: '加载中',
+    });
+    app.loginStatusCallback(app.globalData.cookie);
+  },
+  
 })
 
 const getFileList = (cookie, that, start, num) => {

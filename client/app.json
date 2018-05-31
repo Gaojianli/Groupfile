@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/newIndex/newIndex",
     "pages/index/index",
     "pages/groups/groups",
     "pages/exit/exit",

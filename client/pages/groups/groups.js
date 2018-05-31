@@ -17,27 +17,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad:async function (options) {
-    await wx.request({
-      url: 'https://asdf.zhr1999.club/api/getGroupList',
-      method:'POST',
-      data:{
-        session_cookie:app.globalData.cookie
-      },
-      success:res=>{
-        console.log(res);
-        let groupList = [];
-        for (let i of res.data.group_list){
-          let openGidList = {
-            id: i
-          }
-          groupList.push(openGidList);
-        }
-        this.setData({
-          "groupList.empty": res.data.num?false:true,
-          "groupList.group": groupList
-        })
-      }
-    })
+    
+    if (app.groupOnLoadFunc){
+      app.groupOnLoadFunc();
+    }
   },
 
   /**
@@ -72,14 +55,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    app.groupOnLoadFunc();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
