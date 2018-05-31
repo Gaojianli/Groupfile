@@ -46,6 +46,13 @@
 						"shareName": "75htyLVyp5EGzJVOj-F-Mw8FtjVgT6MMytpq69spz4o@cr4dev",
 						"shareKey": "jrUbNFJKgqfsgqZCb6R9xrYcM959SgwNBh_vmzltoxB7ADRit6joSFlUChZdPlaBUIzbeNAleMbod719yyjkbw~~"
 					}
+				},
+				{
+					"id": 1,
+					"name": "newIndex",
+					"pathName": "pages/newIndex/newIndex",
+					"query": "",
+					"scene": "1001"
 				}
 			]
 		}
