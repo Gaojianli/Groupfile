@@ -1,6 +1,6 @@
 let session_token = require('../sql/session');
 let user_info = require('../sql/user');
-module.exports = (ctx, next) => {
+module.exports = async(ctx, next) => {
     if ("MicroMessenger" in ctx.request.headers['user-agent'] || "wechatdevtools" in ctx.request.headers['user-agent']) {
         let get = ctx.query;
         let user = await session_token.get_user(get.session_cookie);
