@@ -109,3 +109,26 @@ text.file-time{
 
   height: 50px;
 }
+.com-widget-scanCode {
+        position: fixed;
+        bottom: 75px;
+        right: 20px;
+        background: #51A8DD;
+        border-radius: 50%;
+        overflow: hidden;
+        z-index: 500;
+        border:1px solid #eeeeee;
+        box-shadow: 2px 2px 2px #eeeeee;
+}
+.com-widget-scanCode .icon-scanCode{
+        background-color: #51A8DD;
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 12px;
+        color: #ffffff;
+        text-align: center;
+        border-radius: 50%;
+        -webkit-background-size: 50px auto;
+}

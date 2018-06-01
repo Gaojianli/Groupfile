@@ -1,0 +1,9 @@
+<!--pages/checkToLogin/checkToLogin.wxml-->
+<view class="common-view" style='height:{{winHeight}}px'>
+  <icon type="success" size="100" color="#51A8DD"/>
+  <view class="note-tital">
+    正在登陆网页版群文件分享，请确认是本人操作。
+  </view>
+  <button class='button' bindtap="loginWeb">登陆</button>
+  <button class='button' bindtap='goBack'>返回</button>
+</view>

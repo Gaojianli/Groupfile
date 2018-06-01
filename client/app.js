@@ -38,6 +38,7 @@ App({
     userInfo: null,
     cookie: null,
     loginStatus: false,
-    shareTicket: null
+    shareTicket: null,
+    winHeight: null,
   }
 })
