@@ -5,6 +5,7 @@ let bodyParser = require('koa-body');
 let config = require('./config');
 let route = require('./route/route');
 const app = websocket(new Koa());
+app.ws.use(route.ws);
 app.use(bodyParser({ multipart: true }));
 app.use(async(ctx, next) => {
     console.log(`Process ${ctx.request.method} ${ctx.request.url}...`);
@@ -18,6 +19,5 @@ app.use(async(ctx, next) => {
     await next();
 })
 app.use(route.common);
-app.ws.use(route.ws);
 app.listen(8082);
 console.log('app started at port 8082...');
