@@ -15,5 +15,5 @@ module.exports = {
         route.post('/api/getGroupList', require("../controllers/getGroupList")),
         route.get('/api/scanCode', require('../controllers/scanCode'))
     ]),
-    ws: route.all('/api/qrCode', require('../controllers/ws_qrCode')).routes()
+    ws: route.all('/api/qrCode', require('../controllers/ws_qrCode'))
 }
