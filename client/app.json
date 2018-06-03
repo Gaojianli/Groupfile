@@ -5,7 +5,8 @@
     "pages/groups/groups",
     "pages/exit/exit",
     "pages/details/details",
-    "pages/groupFiles/groupFiles"
+    "pages/groupFiles/groupFiles",
+    "pages/checkToLogin/checkToLogin"
   ],
   "window": {
     "backgroundTextStyle": "light",

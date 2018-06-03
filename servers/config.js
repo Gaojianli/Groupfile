@@ -1,6 +1,10 @@
 if (!global.conf) {
     global.conf = {};
 }
+if (!global.data) {
+    global.data = {};
+}
+global.conf.root = "https://asdf.zhr1999.club";
 global.conf.mongodb = {
     url: "mongodb://127.0.0.1:27017/groupfile",
     // url: "127.0.0.1",

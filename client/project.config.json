@@ -53,6 +53,12 @@
 					"pathName": "pages/newIndex/newIndex",
 					"query": "",
 					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "checkout",
+					"pathName": "pages/checkToLogin/checkToLogin",
+					"query": "session=dsajkhjkskjskajn"
 				}
 			]
 		}

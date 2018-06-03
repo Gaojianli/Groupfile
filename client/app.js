@@ -8,17 +8,6 @@ App({
 
   onShow: async function (opt) {
     console.log(opt.scene);
-    if (!this.globalData.loginStatus)
-      await utils.loginCus(this)
-    if (this.loginStatusCallback) {
-      this.loginStatusCallback(this.globalData.loginStatus);
-    }
-    if (opt.scene == 1044) {
-      this.globalData.shareTicket = opt.shareTicket
-      if (this.shareTicketCallback) {
-        this.shareTicketCallback(this.globalData.shareTicket);
-      }
-    }
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -33,11 +22,24 @@ App({
         }
       }
     })
+    if (!this.globalData.loginStatus)
+      await utils.loginCus(this)
+    if (this.loginStatusCallback) {
+      this.loginStatusCallback(this.globalData.loginStatus);
+    }
+    if (opt.scene == 1044) {
+      this.globalData.shareTicket = opt.shareTicket
+      if (this.shareTicketCallback) {
+        this.shareTicketCallback(this.globalData.shareTicket);
+      }
+    }
+
   },
   globalData: {
     userInfo: null,
     cookie: null,
     loginStatus: false,
-    shareTicket: null
+    shareTicket: null,
+    winHeight: null,
   }
 })

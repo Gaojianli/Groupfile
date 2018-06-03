@@ -31,6 +31,24 @@ let update_user_session_key = (user_id, session_key) => {
         })
     })
 }
+let update_user_complete_info = (user_id,complete)=>{
+    return new Promise((rec,rej)=>{
+        user.findById(user_id).exec(async(err,rew)=>{
+            if(err) console.log(err);
+            if(global.conf.debug) console.log(complete);
+            rew.avatar_url = complete.avatarUrl;
+            rew.full_info={
+                nick_name: complete.nickName,
+                gender: complete.gender,
+                city: complete.city,
+                province: complete.province,
+                country: complete.country
+            };
+            await rew.save();
+            rec(rew);
+        })
+    })
+}
 let update_user = (lim, data) => {
     return new Promise((rec, rej) => {
         user.updateOne(update.lim, { $set: update.data }, (err, raw) => {
@@ -95,6 +113,7 @@ module.exports = {
     add_user: add_user,
     update_user_session_key: update_user_session_key,
     update_user: update_user,
+    update_user_complete_info: update_user_complete_info,
     find_file_list: find_file_list,
     add_file: add_file,
     add_group: add_group,

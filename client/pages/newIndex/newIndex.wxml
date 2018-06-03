@@ -30,16 +30,20 @@
   <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}px">
     <swiper-item>
       <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}" pper-threshold="0" bindscrolltoupper="toUpperLoad">
-        <view class="userinfo" wx:if="{{!hasUserInfo && canIUse}}">
-          <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取用户信息 </button>
-        </view>
+        
         <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
       </scroll-view>
     </swiper-item>
     <swiper-item>
-      <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}"  pper-threshold="0" bindscrolltoupper="toUpperLoad">
+      <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}" pper-threshold="0" bindscrolltoupper="toUpperLoad">
         <template is="group-list" wx:for="{{groupList.group}}" wx:key="id" wx:if="{{!groupList.empty}}" data="{{...item}}"></template>
       </scroll-view>
     </swiper-item>
+
   </swiper>
+  <view class="com-widget-scanCode" bindtap="scanCode">
+    <view class="icon-scanCode">
+      扫码登陆
+    </view>
+  </view>
 </view>

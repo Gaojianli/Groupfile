@@ -11,7 +11,7 @@ Page({
     refreshing: false,
     userInfo: "",
     loginStatus: false,
-    hasUserInfo: false,
+    hasUserInfo: false, //TODO: 可以移除
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     filelist: {
       empty: true,
@@ -66,6 +66,7 @@ Page({
           that.setData({
             winHeight: calc
           });
+          app.globalData.winHeight = calc;
           rec(true);
         }
       });
@@ -186,6 +187,24 @@ Page({
     await Promise.all([downPromise,reloadPromise]);
     await fullDownTheLoad(this, 200, 'up');
   },
+  scanCode: function(e){
+    wx.scanCode({
+      scanType: 'qrCode',
+      success: (res) => {
+        let strs = res.result.split("=");
+        if (strs[0]=="https://asdf.zhr1999.club/api/scanCode?cookie"){
+          wx.navigateTo({
+            url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
+          })
+        }else{
+          wx.showToast({
+            title: '二维码错误',
+          })
+        }
+        console.log(res)
+      }
+    })
+  }
 })
 app.groupOnLoadFunc = (that) => {
   wx.showLoading({
