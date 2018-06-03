@@ -10,7 +10,6 @@ module.exports = async (ctx,next)=>{
     }
     let WXBizDataCrypt_new = new WXBizDataCrypt(global.conf.wxapp.AppID, user.session_key)
     let complete = WXBizDataCrypt_new.decryptData(post.encryptedData, post.vi);
-    complete = JSON.parse(complete);
     await user_info.update_user_complete_info(user,complete);
     ctx.response.body = JSON.stringify({success:true});
     return;
