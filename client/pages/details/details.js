@@ -145,7 +145,7 @@ Page({
   goBack: ()=>{
     if(getCurrentPages().length == 1){
       wx.switchTab({
-        url: '/pages/index/index',
+        url: '/pages/newIndex/newIndex',
       })
     }else{
       wx.navigateBack({

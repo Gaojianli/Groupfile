@@ -11,7 +11,7 @@ Page({
     refreshing: false,
     userInfo: "",
     loginStatus: false,
-    hasUserInfo: false,
+    hasUserInfo: false, //TODO: 可以移除
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     filelist: {
       empty: true,
