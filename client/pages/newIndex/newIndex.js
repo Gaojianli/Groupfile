@@ -148,17 +148,19 @@ Page({
     }
   },
   footerTap: app.footerTap,
+  bindscroll: function(e){
+    console.log(e);
+  },
   toUpperLoad: async function (e) {
     var that = this
     if (that.data.refreshing) return
     that.setData({ refreshing: true })
-    let downPromise = fullDownTheLoad(this,200,'down')
     let reloadPromise = null;
     //刷新请求
     if (this.data.currentTab == 0) {
       reloadPromise = getFileList(app.globalData.cookie, this);
-    }else{
-      reloadPromise = new Promise((rec)=>{
+    } else {
+      reloadPromise = new Promise((rec) => {
         wx.request({
           url: 'https://asdf.zhr1999.club/api/getGroupList',
           method: 'POST',
@@ -184,26 +186,32 @@ Page({
         })
       })
     }
-    await Promise.all([downPromise,reloadPromise]);
-    await fullDownTheLoad(this, 200, 'up');
+    await fullDownTheLoad(this, 50, 'down').then(reloadPromise).then(fullDownTheLoad(this, 50, 'up'))
   },
-  scanCode: function(e){
-    wx.scanCode({
-      scanType: 'qrCode',
-      success: (res) => {
-        let strs = res.result.split("=");
-        if (strs[0]=="https://asdf.zhr1999.club/api/scanCode?cookie"){
-          wx.navigateTo({
-            url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
-          })
-        }else{
-          wx.showToast({
-            title: '二维码错误',
-          })
+  scanCode: function (e) {
+    let neverHelp = wx.getStorageSync('neverHelp');
+    if (neverHelp) {
+      wx.scanCode({
+        scanType: 'qrCode',
+        success: (res) => {
+          let strs = res.result.split("=");
+          if (strs[0] == "https://asdf.zhr1999.club/api/scanCode?cookie") {
+            wx.navigateTo({
+              url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
+            })
+          } else {
+            wx.showToast({
+              title: '二维码错误',
+            })
+          }
+          console.log(res)
         }
-        console.log(res)
-      }
-    })
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/help/help',
+      })
+    }
   }
 })
 app.groupOnLoadFunc = (that) => {
@@ -309,17 +317,17 @@ const loadThePage = (that) => {
   }
 }
 const fullDownTheLoad = (that, time, type) => {
-  let sleep = new Promise((rec) => {
-    setTimeout(rec, 1);
+  var sleep = new Promise((rec) => {
+    setTimeout(()=>{rec(true)}, 1);
   })
   return new Promise(async (rec) => {
-    let now = 0;
-    while (now == time) {
+    let now = 1;
+    while (now <= time) {
       if (type == 'down') {
         that.setData({
           refreshHeight: 50 * (1 - 2 * (now / time - 1) * (now / time - 1))
         })
-      }else{
+      } else {
         that.setData({
           refreshHeight: 50 * (1 - 2 * (now / time) * (now / time))
         })

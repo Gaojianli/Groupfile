@@ -126,7 +126,7 @@ text.file-time{
         width: 50px;
         height: 50px;
         line-height: 50px;
-        font-size: 12px;
+        font-size: 30px;
         color: #ffffff;
         text-align: center;
         border-radius: 50%;

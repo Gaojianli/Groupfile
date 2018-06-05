@@ -1,19 +1,26 @@
 <!--pages/details/details.wxml-->
-<view class="body" wx:if="{{loaded}}">
-  <view>
-    <image src='https://asdf.zhr1999.club/resource/icons/{{type}}.svg' class='icon'></image>
-  </view>
-  <view class='text'>
-    <text class='name'>{{name}}</text>
-    <text class='time'>上传时间：{{time}}</text>
-  </view>
-  <view wx:if="{{!downloading}}"><button class='button' wx:if="{{!downloaded}}" bindtap='download' style='margin-top: 60rpx;'>下载</button></view>
-  
-<view wx:if="{{downloading}}" class="progress">
-  <progress percent="{{percent}}" active='{{isDown}}' activeColor='#51A8DD' stroke-width="14" />
- </view>
-  
-  <button class='button' wx:if="{{downloaded}}" bindtap='open' style='margin-top: 60rpx;'>打开</button>
-  <button class='button' open-type="share"  style='margin-top: 30rpx;'>分享</button>
-  <button class='button' bindtap="goBack"  style='margin-top: 30rpx;'>返回</button>
+<view style='height:{{winHeight}}px;width:{{windowWidth}}px'>
+  <swiper style='height:100%;width:100%' duration="300" bindanimationfinish="bindanimationfinish">
+    <swiper-item class="body" wx:if="{{loaded}}">
+      <view>
+        <image src='https://asdf.zhr1999.club/resource/icons/{{type}}.svg' class='icon'></image>
+      </view>
+      <view class='text'>
+        <text class='name'>{{name}}</text>
+        <text class='time'>上传时间：{{time}}</text>
+      </view>
+      <view wx:if="{{!downloading}}">
+        <button class='button' wx:if="{{!downloaded}}" bindtap='download' style='margin-top: 60rpx;'>下载</button>
+      </view>
+
+      <view wx:if="{{downloading}}" class="progress">
+        <progress percent="{{percent}}" active='{{isDown}}' activeColor='#51A8DD' stroke-width="14" />
+      </view>
+
+      <button class='button' wx:if="{{downloaded}}" bindtap='open' style='margin-top: 60rpx;'>打开</button>
+      <button class='button' open-type="share" style='margin-top: 30rpx;'>分享</button>
+      <button class='button' bindtap="goBack" style='margin-top: 30rpx;'>返回</button>
+    </swiper-item>
+  </swiper>
+
 </view>

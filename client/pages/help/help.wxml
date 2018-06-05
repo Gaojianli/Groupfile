@@ -1,0 +1,18 @@
+<!--pages/help/help.wxml-->
+<view class="common-view" style='height:{{winHeight}}px'>
+  <!-- <icon type="success" size="100" color="#51A8DD"/> -->
+  <view class="note-tital">
+    文件的上传暂时只能在电脑网页端完成,请在浏览器打开:
+  </view>
+  <view class="note-tital">
+    https://asdf.zhr1999.club
+  </view>
+  <view class="note-tital">
+    进行扫码登陆
+  </view>
+  <checkbox-group bindchange="checkboxChange">
+  <checkbox value="neverShow" checked="{{neverShowCheck}}">不再提示</checkbox>
+  </checkbox-group>
+  <button class='button' bindtap='goScan'>前往扫描</button>
+</view>
+
