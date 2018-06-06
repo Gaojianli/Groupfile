@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/newIndex/newIndex",
     "pages/index/index",
     "pages/groups/groups",
     "pages/exit/exit",
@@ -14,21 +13,5 @@
     "backgroundColorTop": "#51A8DD",
     "navigationBarTitleText": "群文件",
     "navigationBarTextStyle": "white"
-  },
-  "tabBar": {
-    "color": "#fff",
-    "selectedColor": "#fff",
-    "backgroundColor": "#51A8DD",
-    "position": "top",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的文件"
-      },
-      {
-        "pagePath": "pages/groups/groups",
-        "text": "群组"
-      }
-    ]
   }
 }
