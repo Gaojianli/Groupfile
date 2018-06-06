@@ -15,5 +15,5 @@
   
   <button class='button' wx:if="{{downloaded}}" bindtap='open' style='margin-top: 60rpx;'>打开</button>
   <button class='button' open-type="share"  style='margin-top: 30rpx;'>分享</button>
-  <button class='button' bindtap="goBack"  style='margin-top: 30rpx;'>返回</button>
+  <button class='button' bindtap="goBack"  style='margin-top: 30rpx;' wx:if="{{fromShare}}">返回</button>
 </view>
