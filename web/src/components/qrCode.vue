@@ -22,6 +22,11 @@
                     <mu-button flat>Action 2</mu-button>
                 </mu-card-actions> -->
             </mu-card>
+            <mu-snackbar :position="normal.position" :open.sync="normal.open">
+                {{normal.message}}
+                <mu-button flat slot="action" color="secondary" @click="normal.open = false">Close</mu-button>
+            </mu-snackbar>
+
         </mu-flex>
     </mu-flex>
 </template>
@@ -42,34 +47,43 @@ export default {
         bgColor: "#51A8DD",
         size: 500
       },
+      normal: {
+        position: 'top-end',
+        message: '登陆成功',
+        open: false,
+        timeout: 3000
+      }
     };
   },
   mounted () {
       // TODO: 这里写ws相关.
-    //   var that = this;
-    //   var ws = new WebSocket("wss://asdf.zhr1999.club/api/qrCode");
+      var that = this;
+      var ws = new WebSocket("wss://asdf.zhr1999.club/api/qrCode");
     //   ws.onopen = function()
     //   {
     //      // Web Socket 已连接上，使用 send() 方法发送数据
     //      ws.send("发送数据");
     //      alert("数据发送中...");
     //   };
-    //   ws.onmessage = function (evt) 
-    //   { 
-    //       if(evt.data != "success"){
-    //           ws.close();
-    //       }
-    //     that.qrcodeUrl = evt.data;
-    //     that.$store.state.loginStatus.cookie 
-    //      var received_msg = evt.data;
-    //      alert("数据已接收...");
-    //   };
+      ws.onmessage = function (evt) 
+      { 
+          if(evt.data == "success"){
+                that.$store.state.loginStatus.login = true;
+                that.normal.open = true;
+                that.normal.timer = setTimeout(() => {
+                    that.normal.open = false;
+                }, that.normal.timeout);
+                ws.close();
+          }
+        that.qrcodeUrl = evt.data;
+        that.$store.state.loginStatus.cookie = that.qrcodeUrl.split('=')[1];
+      };
     //   ws.onclose = function()
     //   { 
     //      // 关闭 websocket
     //      alert("连接已关闭..."); 
     //   };
-    //   console.log(this);
+      console.log(this);
   },
   methods:{
     

@@ -1,6 +1,7 @@
 export default {
     state:{
-        cookie:"asdf",
+        cookie:null,
+        login:false,
         show:false
     },
     mutations:{ // 这里的方法必须同步
