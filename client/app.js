@@ -41,5 +41,6 @@ App({
     loginStatus: false,
     shareTicket: null,
     winHeight: null,
+    showHelpStatus:false
   }
 })
