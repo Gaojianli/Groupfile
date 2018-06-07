@@ -11,7 +11,7 @@ let upload_file = (file) => {
     return new Promise(async(rec, rej) => {
         let conf = global.conf.upload.conf;
         let random_name = await random;
-        if (global.conf.upload.type == 'loacl') {
+        if (global.conf.upload.type == 'local') {
             fs.writeFileSync(join(conf.path, random_name), fs.readFileSync(file.path));
             rec('local://' + join(conf.path, random_name));
         } else {
