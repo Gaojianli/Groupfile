@@ -9,7 +9,7 @@ module.exports = async(ctx, next) => {
             return;
         }
         if (global.data[get.web_session_cookie] && global.data[get.web_session_cookie].readyState == 1) {
-            let complete_user_info = user_info.find_user_by_openid(user);
+            let complete_user_info = user_info.find_user_by_userid(user);
             let out = {
                 avatar_url: complete_user_info.avatar_url,
                 nick_name: complete_user_info.full_info.nick_name,

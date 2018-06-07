@@ -14,6 +14,13 @@ let find_user_by_openid = (openid) => {
         });
     });
 };
+let find_user_by_userid = (user_id) => {
+    return new Promise((rec, rej) => {
+        user.findById(user_id, (err, rec) => {
+            res(rec);
+        });
+    })
+}
 let add_user = async(user_info) => {
     let a_user = new user(user_info);
     let rec = await a_user.save();
@@ -31,13 +38,13 @@ let update_user_session_key = (user_id, session_key) => {
         })
     })
 }
-let update_user_complete_info = (user_id,complete)=>{
-    return new Promise((rec,rej)=>{
-        user.findById(user_id).exec(async(err,rew)=>{
-            if(err) console.log(err);
-            if(global.conf.debug) console.log(complete);
+let update_user_complete_info = (user_id, complete) => {
+    return new Promise((rec, rej) => {
+        user.findById(user_id).exec(async(err, rew) => {
+            if (err) console.log(err);
+            if (global.conf.debug) console.log(complete);
             rew.avatar_url = complete.avatarUrl;
-            rew.full_info={
+            rew.full_info = {
                 nick_name: complete.nickName,
                 gender: complete.gender,
                 city: complete.city,
@@ -110,6 +117,7 @@ let find_group_list = (user_id) => {
 }
 module.exports = {
     find_user_by_openid: find_user_by_openid,
+    find_user_by_userid: find_user_by_userid,
     add_user: add_user,
     update_user_session_key: update_user_session_key,
     update_user: update_user,
