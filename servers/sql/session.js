@@ -55,9 +55,27 @@ let get_user = (cookie) => {
         })
     })
 }
+let add_user_id = (cookie, user_id) => {
+    remove_userid(user_id, 'web');
+    return new Promise((rec, rej) => {
+        session_cookie.findOne({ session_cookie: cookie }).exec(async(err, rew) => {
+            if (err) console.log(err);
+            if (global.conf.debug) console.log(rew);
+            if (rew) {
+                rew.user_id = user_id;
+                await rew.save();
+                rec(rew.user_id);
+            } else {
+                rec(null);
+            }
+
+        })
+    })
+}
 module.exports = {
     new_cookie: new_cookie,
     update_cookie: update_cookie,
     remove_userid: remove_userid,
-    get_user: get_user
+    get_user: get_user,
+    add_user_id: add_user_id
 }
