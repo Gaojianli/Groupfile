@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 200rpx 0;
+  padding: 150rpx 0 0 0;
 }
 .icon{
   width:400rpx;
@@ -30,4 +30,7 @@ text.time{
   color: #51A8DD;
   width: 500rpx;
   align-self: flex-end;
+}
+.progress{
+  width:600rpx;
 }

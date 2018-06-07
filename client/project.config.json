@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.8",
+	"libVersion": "2.0.9",
 	"appid": "wxb23cf79ae1526b93",
 	"projectname": "GroupFile",
 	"isGameTourist": false,
@@ -39,13 +39,19 @@
 					"id": 0,
 					"name": "群进入",
 					"pathName": "pages/details/details",
-					"query": "id=5b01144818ff933141ac0773",
+					"query": "id=5b0c003768f01822e96a390c",
 					"scene": "1044",
 					"shareInfo": {
-						"groupName": "测试模拟群0",
-						"shareName": "uGtlSGbRa6M1RLej_ODykeRF-Vw2BoUhd15ahyYDpXA@cr4dev",
-						"shareKey": "gBb_zCt6PBYzMqG9zIIWX3TIo3gXapd_N7q8GTdTHqNHplLotk944ibckBBOToARVrrD9jhwIPZeCKF60IVdzA~~"
+						"groupName": "测试模拟群1",
+						"shareName": "75htyLVyp5EGzJVOj-F-Mw8FtjVgT6MMytpq69spz4o@cr4dev",
+						"shareKey": "jrUbNFJKgqfsgqZCb6R9xrYcM959SgwNBh_vmzltoxB7ADRit6joSFlUChZdPlaBUIzbeNAleMbod719yyjkbw~~"
 					}
+				},
+				{
+					"id": -1,
+					"name": "checkout",
+					"pathName": "pages/checkToLogin/checkToLogin",
+					"query": "session=dsajkhjkskjskajn"
 				}
 			]
 		}

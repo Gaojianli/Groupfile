@@ -29,7 +29,7 @@ let jscode2session = (code) => {
             })
     })
 }
-module.exports = async (ctx, next) => {
+module.exports = async(ctx, next) => {
     let session = JSON.parse(await jscode2session(ctx.query['code']));
     if (session["errcode"]) {
         console.log("error:" + JSON.stringify(session) + "|" + ctx.query['code']);
@@ -44,8 +44,9 @@ module.exports = async (ctx, next) => {
     //let session = {openid: "DEMO",session_key: "SESSIONKEY"}
     let user_info = await user.find_user_by_openid(session.openid);
     if (user_info) {
-        await session_token.remove_userid(user_info.id,'wx');
-    }else{
+        await session_token.remove_userid(user_info.id, 'wx');
+        await user.update_user_session_key(user_info._id, session.session_key);
+    } else {
         user_info = await user.add_user({
             openid: session.openid,
             session_key: session.session_key

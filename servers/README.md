@@ -1,4 +1,5 @@
 ## 后台API一览表
+[TOC]
 ### 通用部分
 #### log
 ##### 使用说明
@@ -155,6 +156,58 @@ session_cookie=YOUR SESSION COOKIE
     "error": "cookie过期，请重试"
 }
 ```
+
+#### getGroupList
+##### 说明
+地址: /api/getGroupList
+
+调用: POST
+
+说明: 获得用户所属的群组列表 返回openGid
+
+|参数名|必须|备注|
+|:-|:-|:-|
+|session_cookie|是|login得到的cookie|
+
+返回:
+
+|参数名|说明|
+|:-|:-|
+|success|true:成功<br>false:失败|
+|num|群组数量|
+|group_list|群组openGid组成的数组|
+|error|只在失败时返回<br>错误信息|
+
+##### 样例
+请求:
+
+POST https://example.com/api/getGroupFile
+
+session_cookie=我是cookie
+
+返回:
+
+成功时:
+
+```JSON
+{
+    "success":true,
+    "num":1,
+    "group_list":[
+        "afkjabjdshjhjadhjf"
+    ]
+}
+```
+
+失败时:
+
+```JSON
+{
+    "success":false,
+    "error":"cookie过期，请重试"
+}
+```
+
 #### openShare
 地址: /api/openShare
 
@@ -165,8 +218,9 @@ session_cookie=YOUR SESSION COOKIE
 |参数名|必须|备注|
 |:-|:-|:-|
 |session_cookie|是|login得到的cookie|
-|openGid|是|从一个微信给的API拿到的|
 |file_id|是|文件的id|
+|encryptedData|是|加密后的openGid|
+|vi|是|加密向量|
 
 返回:
 
@@ -244,4 +298,115 @@ session_cookie=我是cookie&openGid=我是openGid&file_id=我是文件id
 
 调用: POST-multipart
 
-说明: 暂时没写完,写完再更
+参数:
+
+|参数名|必须|备注|
+|:-|:-|:-|
+|session_cookie|是|login得到的cookie|
+
+返回:
+
+|参数名|说明|
+|:-|:-|
+|success|true:成功<br>false:失败|
+|error|失败的时候会返回的错误信息|
+
+##### 样例
+###### 微信小程序
+请求:
+```js
+wx.uploadFile({
+    url: 'https://example.com/api/upload', //仅为示例，非真实的接口地址
+    filePath: '文件路径 -- 这是个问题', 
+    // 现在这个可用路径的唯一提供者是 wx.chooseImage 但是这个只能选图片
+    // 这个问题你想个办法
+    name: 'file',
+    formData:{
+        'session_cookie': 'COOKIE'
+    },
+    success: function(res){
+        var data = res.data
+        //do something
+    }
+})
+```
+返回:
+
+成功时:
+
+```JSON
+{
+    "success":true
+}
+```
+
+失败时:
+
+```JSON
+{
+    "success":false,
+    "error":"cookie过期，请重试"
+}
+```
+
+###### web
+
+```HTML
+<form action="/api/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" multiple>
+    <input type="submit" value="Upload">
+</form>
+```
+
+PS: web端session就可以用cookie的方式存储了,这部分还没做
+
+返回同上
+
+暂时这样 ,这样是不可以的,应该指向下一个页面
+
+或者使用js上传文件(雾
+
+#### download
+##### 说明
+地址: /api/download
+
+调用: POST
+
+说明: 用来下载文件
+
+参数:
+
+|参数名|必须|备注|
+|:-|:-|:-|
+|session_cookie|是|login得到的cookie|
+|file_id|是|文件的ID|
+
+返回:
+
+成功时:文件
+
+失败时:JSON
+
+|参数名|说明|
+|:-|:-|
+|success|false:失败|
+|error|失败的时候会返回的错误信息|
+
+##### 样例
+
+请求:
+
+POST https://example.com/api/download
+
+session_cookie=COOKIE&file_id=FILE_ID
+
+返回:
+
+失败时:
+
+```JSON
+{
+    "success":false,
+    "error":"cookie过期，请重试"
+}
+```

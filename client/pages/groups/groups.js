@@ -1,35 +1,26 @@
 // pages/groups/groups.js
+import regeneratorRuntime from "../../utils/runtime.js"
+const app=getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    filelist: {
-      empty: true,
-      data: []
+    groupList:{
+      empty:true,
+      group:[]
     }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    this.setData({
-      filelist: {
-        empty: false,
-        data: [
-          {
-            fileName: "我是文件名",
-            uploadTime: "2018-2-3 15：32"
-          },
-          {
-            fileName: "我是文件二号",
-            uploadTime: "time"
-          }
-        ]
-      }
-    })
+  onLoad:async function (options) {
+    
+    if (app.groupOnLoadFunc){
+      app.groupOnLoadFunc();
+    }
   },
 
   /**
@@ -64,14 +55,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    app.groupOnLoadFunc();
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
@@ -79,5 +70,10 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+  showDetails: function(e) {
+    wx.navigateTo({
+      url: '/pages/groupFiles/groupFiles?id=' + e.currentTarget.dataset.id,
+    })
   }
 })
