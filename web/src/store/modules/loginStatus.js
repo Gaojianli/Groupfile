@@ -1,7 +1,10 @@
 export default {
     state:{
-        cookie:"asdf",
-        show:false
+        cookie:null,
+        login:false,
+        show:false,
+        nick_name: null,
+        avatar_url: null
     },
     mutations:{ // 这里的方法必须同步
         switch_dialog(state){//这里的state对应着上面这个state
