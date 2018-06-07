@@ -22,7 +22,7 @@ Page({
     time: null,
     name: null,
     loaded: false,
-    winHeight: null,
+    fromShare:false
   },
 
   /**
@@ -107,6 +107,9 @@ Page({
     }
     if (app.globalData.shareTicket){
       app.shareTicketCallback(app.globalData.shareTicket);
+      this.setData({
+        fromShare:true
+      })
     }
   },
 
@@ -160,16 +163,9 @@ Page({
     })
   },
   goBack: ()=>{
-    if(getCurrentPages().length == 1){
-      wx.switchTab({
-        url: '/pages/newIndex/newIndex',
-      })
-    }else{
-      wx.navigateBack({
-        delta: 1
-      })
-    }
-    
+    wx.navigateTo({
+      url: '/pages/index/index',
+    })
   },
   open: () => {
     console.log(file)
