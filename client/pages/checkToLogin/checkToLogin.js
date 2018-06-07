@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     winHeight:null,
     webSession: null,
   },
@@ -15,8 +17,40 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
+      hasUserInfo: app.globalData.userInfo?true:false,
       winHeight: app.globalData.winHeight,
       webSession: options.session
+    })
+  },
+  getUserInfo: function(e){
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    wx.request({
+      url: 'https://asdf.zhr1999.club/api/completeInfo',
+      data:{
+        session_cookie: app.globalData.cookie,
+        encryptedData: e.detail.encryptedData,
+        vi: e.detail.iv
+      },
+      method:"POST",
+      success: (rec)=>{
+        if(rec.data.success){
+          this.loginWeb();
+        }else{
+          wx.showToast({
+            title: rec.data.error ? rec.data.error : '服务器繁忙，请重试。',
+            icon: 'none',
+            duration: 2000,
+            mask: true,
+            success: () => {
+              setTimeout(this.goBack, 2000);
+            }
+          })
+        }
+      }
+    })
+    this.setData({
+      hasUserInfo: true
     })
   },
   loginWeb: function(e){
