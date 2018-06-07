@@ -4,13 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import MuseUI from 'muse-ui';
-import store from './store'
+import store from './store';
+import VueResource from "vue-resource";
 import 'muse-ui/dist/muse-ui.css';
 import 'typeface-roboto';
 
 Vue.config.productionTip = false
 Vue.use(MuseUI);
-
+Vue.use(VueResource);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
