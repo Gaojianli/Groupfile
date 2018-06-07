@@ -15,7 +15,7 @@ let find_user_by_openid = (openid) => {
     });
 };
 let find_user_by_userid = (user_id) => {
-    return new Promise((rec, rej) => {
+    return new Promise((res, rej) => {
         user.findById(user_id, (err, rec) => {
             res(rec);
         });
