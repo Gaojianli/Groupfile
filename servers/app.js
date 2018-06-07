@@ -15,6 +15,8 @@ app.use(async(ctx, next) => {
     if (ctx.request.method == "POST") {
         // for(ctx.request.body in ctx.request.body);
         if (global.conf.debug) console.log(ctx.request.body);
+    } else if (ctx.request.method == "OPTIONS") {
+        ctx.response.status = 200;
     }
     await next();
 })
