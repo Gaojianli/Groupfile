@@ -87,8 +87,8 @@ Page({
     })
   },
   goBack: ()=>{
-    wx.navigateBack({
-      delta: 1
+    wx.reLaunch({
+      url:'/pages/index/index'
     })
   }
 })

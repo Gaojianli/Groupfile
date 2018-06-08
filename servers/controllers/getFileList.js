@@ -60,7 +60,7 @@ module.exports = async(ctx, next) => {
     if (post.openGid) {
         files = await group_info.find_Gfile_list(post.openGid, post.first, post.num);
     } else {
-        files = await user_info.find_file_list(user._id, post.first, post.num);
+        files = await user_info.find_file_list(user, post.first, post.num);
     }
     let empty = true;
     if (files) {

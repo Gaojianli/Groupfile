@@ -30,6 +30,11 @@ Page({
    */
   onLoad: async function (options) {
     var that = this;
+    if (getCurrentPages().length == 1) {
+      this.setData({
+        fromShare: true
+      })
+    }
     //  高度自适应
     await new Promise((rec, rej) => {
       wx.getSystemInfo({
@@ -107,9 +112,6 @@ Page({
     }
     if (app.globalData.shareTicket){
       app.shareTicketCallback(app.globalData.shareTicket);
-      this.setData({
-        fromShare:true
-      })
     }
   },
 
@@ -163,7 +165,7 @@ Page({
     })
   },
   goBack: ()=>{
-    wx.navigateTo({
+    wx.reLaunch ({
       url: '/pages/index/index',
     })
   },

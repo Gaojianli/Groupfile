@@ -22,7 +22,6 @@ const loginCus = (app) => {
         success: () => {
           app.globalData.cookie = value
           app.globalData.loginStatus = true
-          resolve(true);
         },
         complete: () => {
           if (value == "")
@@ -55,6 +54,8 @@ const loginCus = (app) => {
                 }
               }
             })
+          else
+            resolve(true);
         }
       })
     } catch (e) {

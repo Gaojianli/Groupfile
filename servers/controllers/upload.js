@@ -15,8 +15,8 @@ module.exports = async(ctx, next) => {
         return;
     }
     let real_url = await upload_file(file);
-    let file_id = await file_info.add_file(file.name, user._id, file.size, real_url);
-    await user_info.add_file(user._id, file_id);
+    let file_id = await file_info.add_file(file.name, user, file.size, real_url);
+    await user_info.add_file(user, file_id);
     ctx.response.body = JSON.stringify({ success: true });
     return;
 }
