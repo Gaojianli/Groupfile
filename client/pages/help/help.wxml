@@ -2,7 +2,7 @@
 <view class="common-view" style='height:{{winHeight}}px'>
   <!-- <icon type="success" size="100" color="#51A8DD"/> -->
   <view class="note-tital">
-    文件的上传暂时只能在电脑网页端完成,请在浏览器打开:
+    由于微信的限制，文件的上传暂时只能在电脑网页端完成,请在浏览器打开:
   </view>
   <view class="note-tital">
     https://asdf.zhr1999.club

@@ -27,7 +27,7 @@ Page({
           })
         } else {
           wx.showToast({
-            title: '二维码错误',
+            title: '二维码无效',
           })
         }
         console.log(res)
