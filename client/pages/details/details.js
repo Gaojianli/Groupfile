@@ -6,7 +6,7 @@ var file = {
   id: null,
   name: null,
   url: null,
-  type: null
+  type: null,
 }
 Page({
 
@@ -29,6 +29,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
+    var that = this;
+    //  高度自适应
+    await new Promise((rec, rej) => {
+      wx.getSystemInfo({
+        success: function (res) {
+          var calc = res.windowHeight
+          console.log(calc)
+          let windowWidth = res.windowWidth;
+          that.setData({
+            winHeight: calc,
+            windowWidth: windowWidth
+          });
+          rec(true);
+        }
+      });
+    })
     if (app.globalData.loginStatus) {
       wx.request({
         url: 'https://asdf.zhr1999.club/api/getFileInfo',
@@ -157,5 +173,8 @@ Page({
       filePath: file.url,
       fileType: file.type
     })
+  },
+  bindanimationfinish: function(e){
+    this.goBack();
   }
 })

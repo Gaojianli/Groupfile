@@ -52,6 +52,12 @@
 					"name": "checkout",
 					"pathName": "pages/checkToLogin/checkToLogin",
 					"query": "session=dsajkhjkskjskajn"
+				},
+				{
+					"id": -1,
+					"name": "checkout",
+					"pathName": "pages/help/help",
+					"query": "session=dsajkhjkskjskajn"
 				}
 			]
 		}

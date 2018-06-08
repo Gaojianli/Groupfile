@@ -1,0 +1,17 @@
+/* pages/checkToLogin/checkToLogin.wxss */
+.common-view{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.note-tital{
+  font-size: 120%;
+  padding: 50rpx;
+}
+.button{
+  margin-top: 30rpx;
+  color: #51A8DD;
+  width: 500rpx;
+  align-self: flex-end;
+}
