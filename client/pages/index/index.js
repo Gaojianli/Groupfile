@@ -282,9 +282,9 @@ const getFileList = (cookie, that, start, num) => {
               isFileListOut: isOut
             })
           }
+          resolve(true);
         }
       })
-      resolve(true);
     }
   })
 }

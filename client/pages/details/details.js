@@ -93,7 +93,8 @@ Page({
                   id: options.id,
                   time: res.data.file.upload_time,
                   name: res.data.file.name,
-                  loaded: true
+                  loaded: true,
+                  fromShare: true
                 })
                 file.id = options.id
                 file.name = res.data.file.name
@@ -107,9 +108,6 @@ Page({
     }
     if (app.globalData.shareTicket){
       app.shareTicketCallback(app.globalData.shareTicket);
-      this.setData({
-        fromShare:true
-      })
     }
   },
 
