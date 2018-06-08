@@ -75,7 +75,8 @@ export default {
             },
             loading:true,
             files: [],
-            openSimple: false
+            openSimple: false,
+            success_ws: true
         }
     },
     mounted(){
@@ -83,7 +84,7 @@ export default {
         if(!this.$store.state.loginStatus.cookie){
             this.$router.push('/');
         }
-       this.$http.post(
+        this.$http.post(
         "https://asdf.zhr1999.club/api/getFileList",
         {'session_cookie': this.$store.state.loginStatus.cookie},
         ).then(
@@ -96,6 +97,29 @@ export default {
               console.log(error);
             }
         )
+        let ws = new WebSocket("wss://asdf.zhr1999.club/api/uploadListen");
+        ws.onopen = ()=>{
+            // Web Socket 已连接上，使用 send() 方法发送数据
+            ws.send(this.$store.state.loginStatus.cookie);
+        };
+        ws.onmessage = (evt)=>{
+            try{
+                let rec = JSON.parse(evt.data);
+                if(rec.success == "error"){
+                    this.success_ws = false;
+                    console.log(this.$store.state.loginStatus.cookie);
+                }else if(rec.success == "uploadListen"){
+                    if("file" in rec){
+                        this.file_list.files.push(rec.file);
+                    }
+                }
+            } catch(err){
+                console.log(evt.data);
+            }
+        };
+        ws.onclose = ()=>{
+            console.log("ws断开,请手动刷新页面.")
+        }
     },
     methods:{
         get_svg_url(e){
