@@ -14,6 +14,7 @@ module.exports = async(ctx, next) => {
         ctx.response.body = JSON.stringify({ success: false, error: 'cookie过期，请重试' });
         return;
     }
+    user = await user_info.find_user_by_userid(user);
     if (!post.file_id in user.file_list) {
         ctx.response.body = JSON.stringify({ success: false, error: '非法请求' });
         return;

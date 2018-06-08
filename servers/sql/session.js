@@ -43,7 +43,7 @@ let remove_userid = (userid, type) => {
 }
 let get_user = (cookie) => {
     return new Promise((rec, rej) => {
-        session_cookie.findOne({ session_cookie: cookie }).populate('user_id').exec((err, rew) => {
+        session_cookie.findOne({ session_cookie: cookie }).exec((err, rew) => {
             if (err) console.log(err);
             if (global.conf.debug) console.log(rew);
             if (rew) {

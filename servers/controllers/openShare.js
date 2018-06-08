@@ -52,6 +52,7 @@ module.exports = async(ctx, next) => {
         ctx.response.body = JSON.stringify({ success: false, error: '文件ID无效，请检查' });
         return;
     }
+    user = await user_info.find_user_by_userid(user);
     let WXBizDataCrypt_new = new WXBizDataCrypt(global.conf.wxapp.AppID, user.session_key);
     let openGid = WXBizDataCrypt_new.decryptData(post.encryptedData, post.vi);
     let group = await group_info.find_group(openGid.openGId);
