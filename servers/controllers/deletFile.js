@@ -14,7 +14,7 @@ module.exports = async(ctx, next) => {
         return;
     }
     if (post.type == 'all') {
-        if (file.upload_user_id == user) {
+        if (file.upload_user_id.id == user.id) {
             file_info.remove_file(post.file_id);
             ctx.response.body = JSON.stringify({ success: true });
             return;
@@ -25,7 +25,6 @@ module.exports = async(ctx, next) => {
     } else {
         user = await user_info.find_user_by_userid(user);
         let index = -1;
-        console.log(user.file_list);
         for (const key in user.file_list) {
             if (user.file_list.hasOwnProperty(key)) {
                 const afile = user.file_list[key];
