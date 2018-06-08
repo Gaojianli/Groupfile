@@ -122,6 +122,7 @@ Page({
         wx.hideLoading()
         wx.stopPullDownRefresh();
       }
+      initWSconnect(this);
       //获取文件列表
     }
     if (app.globalData.cookie) {
@@ -336,5 +337,45 @@ const fullDownTheLoad = (that, time, type) => {
       now++;
     }
     rec(true);
+  })
+}
+const initWSconnect = (that)=>{
+  wx.connectSocket({
+    url: 'wss://asdf.zhr1999.club/api/uploadListen',
+  })
+  let ws = new Promise((rec,rej)=>{
+    wx.onSocketOpen(rec);
+    wx.onSocketError(rej);
+  })
+  ws.then((header)=>{
+    return new Promise((rec,rej)=>{
+      wx.sendSocketMessage({
+        data: app.globalData.cookie,
+        success: rec
+      })
+    })
+  })
+  wx.onSocketMessage(function(res){
+    try{
+      let rec = JSON.parse(res.data)
+      if (rec.success == "uploadListen") {
+        if ('file' in rec) {
+          let i = rec.file;
+          let data = {};
+          data.fileName = i.name
+          data.uploadTime = i.upload_time
+          data.type = i.type
+          data.id = i._id
+          that.data.filelist.data.push(data);
+          that.setData({
+            "filelist.empty": false,
+            "filelist.data": that.data.filelist.data,
+            "filelist.loaded": true,
+          })
+        }
+      }
+    } catch(err){
+      console.log(res.data)
+    }
   })
 }

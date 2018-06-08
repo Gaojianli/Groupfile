@@ -14,7 +14,8 @@ module.exports = {
         route.get('/api/download', require('../controllers/download')),
         route.post('/api/getGroupList', require("../controllers/getGroupList")),
         route.get('/api/scanCode', require('../controllers/scanCode')),
-        route.post('/api/completeInfo', require('../controllers/complete'))
+        route.post('/api/completeInfo', require('../controllers/complete')),
+        route.post('/api/deletFile', require('../controllers/deletFile'))
     ]),
     ws: compose([
         route.all('/api/qrCode', require('../controllers/ws_qrCode')),
