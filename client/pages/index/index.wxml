@@ -24,7 +24,7 @@
     <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">我的文件</view>
     <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">群组</view>
   </scroll-view>
-  <view class="refresh-block" style="  margin-top: {{refreshHeight}}px;;" wx:if="{{refreshing}}">
+  <view class="refresh-block" style="  margin-top: {{refreshHeight}}px;;">
     <image class="loading-gif" src="https://asdf.zhr1999.club/resource/pngs/loading.gif"></image>
   </view>
   <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}px">

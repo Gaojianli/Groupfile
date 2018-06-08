@@ -155,6 +155,7 @@ Page({
     var that = this
     if (that.data.refreshing) return
     that.setData({ refreshing: true })
+    setTimeout(() => { that.setData({ refreshing: false })},10000)
     let reloadPromise = null;
     //刷新请求
     if (this.data.currentTab == 0) {

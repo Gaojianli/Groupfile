@@ -30,6 +30,11 @@ Page({
    */
   onLoad: async function (options) {
     var that = this;
+    if (getCurrentPages().length == 1) {
+      this.setData({
+        fromShare: true
+      })
+    }
     //  高度自适应
     await new Promise((rec, rej) => {
       wx.getSystemInfo({
@@ -93,8 +98,7 @@ Page({
                   id: options.id,
                   time: res.data.file.upload_time,
                   name: res.data.file.name,
-                  loaded: true,
-                  fromShare: true
+                  loaded: true
                 })
                 file.id = options.id
                 file.name = res.data.file.name
@@ -161,7 +165,7 @@ Page({
     })
   },
   goBack: ()=>{
-    wx.navigateTo({
+    wx.reLaunch ({
       url: '/pages/index/index',
     })
   },
