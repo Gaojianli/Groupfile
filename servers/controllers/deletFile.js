@@ -14,8 +14,8 @@ module.exports = async(ctx, next) => {
         return;
     }
     if (post.type == 'all') {
-        if (file.upload_user_id.id == user.id) {
-            file_info.remove_file(post.file_id);
+        if (file.upload_user_id.toString() == user.toString()) {
+            await file_info.remove_file(post.file_id);
             ctx.response.body = JSON.stringify({ success: true });
             return;
         } else {

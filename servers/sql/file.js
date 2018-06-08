@@ -44,7 +44,8 @@ let find_file_add_list = (file_id, user_id) => {
     })
 }
 let remove_file = (file_id) => {
-    file_info.findOneAndDelete(file_id);
+    return file_info.findByIdAndRemove(file_id);
+
 }
 module.exports = {
     find_file: find_file,
