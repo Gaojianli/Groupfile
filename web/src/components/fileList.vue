@@ -41,9 +41,19 @@
                             <mu-list-item-sub-title>{{file.upload_time}}</mu-list-item-sub-title>
                         </mu-list-item-content>
                         <mu-list-item-action>
-                            <mu-button icon @click="download(file._id)">
-                                <mu-icon value="info"></mu-icon>
-                            </mu-button>
+                            <mu-menu placement="bottom" cover>
+                                <mu-button icon>
+                                    <mu-icon value="info"></mu-icon>
+                                </mu-button>
+                                <mu-list slot="content">
+                                    <mu-list-item button @click="download(file._id)">
+                                        <mu-list-item-title>下载</mu-list-item-title>
+                                    </mu-list-item>
+                                    <mu-list-item button @click="openAlert = true; deletfile = file;" style="background:#f44336;">
+                                        <mu-list-item-title style="color:#fff">删除</mu-list-item-title>
+                                    </mu-list-item>
+                                </mu-list>
+                            </mu-menu>
                         </mu-list-item-action>
                     </mu-list-item>
                 </transition-group>
@@ -59,8 +69,20 @@
                     </div>
                 </div>
             </div>
-            <mu-button slot="actions" flat color="primary" @click="closeSimpleDialog">Close</mu-button>
+            <mu-button slot="actions" flat color="primary" @click="closeSimpleDialog">关闭</mu-button>
         </mu-dialog>
+        <mu-dialog title="你要怎么删除文件么?" width="600" max-width="80%" :esc-press-close="false" :overlay-close="false" :open.sync="openAlert">
+            从列表中移除只会在自己的列表中移除
+            <br>完全删除的文件将不可恢复,所有该文件的分享也将失效(只有文件上传者可以这样做)
+            <br>你确定要删除:<em style="font-weight:bold;">{{deletfile.name}}</em>么?
+            <mu-button slot="actions" flat color="error" @click="deletFile(deletfile._id,'all')">完全删除</mu-button>
+            <mu-button slot="actions" flat color="error" @click="deletFile(deletfile._id,'person')">从列表中移除</mu-button>
+            <mu-button slot="actions" flat color="primary" @click="openAlert = false">取消</mu-button>
+        </mu-dialog>
+        <mu-snackbar :position="normal.position" :open.sync="normal.open">
+            {{normal.message}}
+            <mu-button flat slot="action" color="secondary" @click="normal.open = false">Close</mu-button>
+        </mu-snackbar>
     </mu-container>
 </template>
 
@@ -76,7 +98,15 @@ export default {
             loading:true,
             files: [],
             openSimple: false,
-            success_ws: true
+            openAlert: false,
+            success_ws: true,
+            deletfile:{},
+            normal: {
+                position: 'top-end',
+                message: null,
+                open: false,
+                timeout: 3000
+            },
         }
     },
     mounted(){
@@ -167,8 +197,50 @@ export default {
         },
         download(file_id){
             window.open("https://asdf.zhr1999.club/api/download?session_cookie="+this.$store.state.loginStatus.cookie+"&file_id="+file_id);
+        },
+        deletFile(file_id,type){
+            this.openAlert = false;
+            let index = -1;
+            for (const key in this.file_list.files) {
+                if (this.file_list.files.hasOwnProperty(key)) {
+                    const element = this.file_list.files[key];
+                    if(element._id == file_id){
+                        index = key;
+                    }
+                }
+            }
+            this.$http.post(
+            "https://asdf.zhr1999.club/api/deletFile",
+            {
+                'session_cookie': this.$store.state.loginStatus.cookie,
+                'file_id': file_id,
+                'type': type
+            },
+            ).then(
+                (response)=>{
+                    console.log(this.file_list.files);
+                    console.log(index);
+                    if(response.data.success){
+                        this.file_list.files.splice(index,1);
+                        this.normal.message = "删除成功"
+                    }else{
+                        this.normal.message = response.data.error;
+                    }
+                    this.normal.open = true;
+                    this.normal.timer = setTimeout(() => {
+                        this.normal.open = false;
+                    }, this.normal.timeout);
+                },
+                (error)=>{
+                    this.normal.message = "服务器繁忙,请稍后再试";
+                    that.normal.open = true;
+                    that.normal.timer = setTimeout(() => {
+                        that.normal.open = false;
+                    }, that.normal.timeout);
+                    console.log(error);
+                }
+            )
         }
-
     }
 }
 </script>
