@@ -23,14 +23,23 @@ module.exports = async(ctx, next) => {
             return;
         }
     } else {
-        user = user_info.find_user_by_userid(user);
-        let index = user.file_list.indexOf(post.file_id);
+        user = await user_info.find_user_by_userid(user);
+        let index = -1;
+        console.log(user.file_list);
+        for (const key in user.file_list) {
+            if (user.file_list.hasOwnProperty(key)) {
+                const afile = user.file_list[key];
+                if (afile == post.file_id) {
+                    index = key;
+                    break;
+                }
+            }
+        }
         if (index > -1) {
             user.file_list.splice(index, 1);
-            user.save().then(() => {
-                ctx.response.body = JSON.stringify({ success: true });
-                return next();
-            })
+            await user.save()
+            ctx.response.body = JSON.stringify({ success: true });
+            return;
         } else {
             ctx.response.body = JSON.stringify({ success: false, error: "文件不存在。" });
             return;
