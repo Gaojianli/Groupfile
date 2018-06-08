@@ -1,6 +1,7 @@
 let user_info = require('../sql/user');
 let session_token = require('../sql/session');
 let file_info = require('../sql/file');
+let delet = require('./_fileio').delete_file;
 module.exports = async(ctx, next) => {
     let post = ctx.request.body;
     let user = await session_token.get_user(post.session_cookie);
@@ -15,9 +16,14 @@ module.exports = async(ctx, next) => {
     }
     if (post.type == 'all') {
         if (file.upload_user_id.toString() == user.toString()) {
-            await file_info.remove_file(post.file_id);
-            ctx.response.body = JSON.stringify({ success: true });
-            return;
+            if (await delet(file.real_url)) {
+                await file_info.remove_file(post.file_id);
+                ctx.response.body = JSON.stringify({ success: true });
+                return;
+            } else {
+                ctx.response.body = JSON.stringify({ success: false, error: "删除文件失败，请和开发者联系" });
+                return;
+            }
         } else {
             ctx.response.body = JSON.stringify({ success: false, error: "您不是文件的拥有者" });
             return;

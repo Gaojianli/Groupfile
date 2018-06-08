@@ -31,7 +31,22 @@ let download_file = (real_url, real_name) => {
         }
     })
 }
+let delete_file = (real_url) => {
+    return new Promise((rec, rej) => {
+        let file = real_url.split('://');
+        let conf = global.conf.upload.conf;
+        if (file[0] == 'local') {
+            fs.unlink(file[1], (err) => {
+                if (err) throw err;
+                rec(true);
+            });
+        } else {
+            throw "未定义的文件保存方式";
+        }
+    })
+}
 module.exports = {
     upload_file: upload_file,
-    download_file: download_file
+    download_file: download_file,
+    delete_file: delete_file
 }
