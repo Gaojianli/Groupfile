@@ -108,7 +108,7 @@ Page({
                   id: options.id,
                   time: res.data.file.upload_time,
                   name: res.data.file.name,
-                  loaded: true,
+                  loaded: true
                 })
                 file.id = options.id
                 file.name = res.data.file.name
