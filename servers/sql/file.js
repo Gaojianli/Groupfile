@@ -43,8 +43,13 @@ let find_file_add_list = (file_id, user_id) => {
         })
     })
 }
+let remove_file = (file_id) => {
+    return file_info.findByIdAndRemove(file_id);
+
+}
 module.exports = {
     find_file: find_file,
     add_file: add_file,
-    find_file_add_list: find_file_add_list
+    find_file_add_list: find_file_add_list,
+    remove_file: remove_file
 }

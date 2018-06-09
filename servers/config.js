@@ -1,8 +1,8 @@
 if (!global.conf) {
     global.conf = {};
 }
-if (!global.data) {
-    global.data = {};
+if (!global.ws) {
+    global.ws = { qr_scan: {}, upload: {} };
 }
 global.conf.root = "https://asdf.zhr1999.club";
 global.conf.mongodb = {

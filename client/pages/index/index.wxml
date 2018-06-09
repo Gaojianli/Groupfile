@@ -24,18 +24,18 @@
     <view class="tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">我的文件</view>
     <view class="tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">群组</view>
   </scroll-view>
-  <view class="refresh-block" style="  margin-top: {{refreshHeight}}px;;" wx:if="{{refreshing}}">
+  <view class="refresh-block" style="  margin-top: {{refreshHeight}}px;;">
     <image class="loading-gif" src="https://asdf.zhr1999.club/resource/pngs/loading.gif"></image>
   </view>
   <swiper class="tab-content" current="{{currentTab}}" duration="300" bindchange="switchTab" style="height:{{winHeight}}px">
     <swiper-item>
-      <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}" pper-threshold="0" bindscrolltoupper="toUpperLoad">
+      <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}">
         
         <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
       </scroll-view>
     </swiper-item>
     <swiper-item>
-      <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}" pper-threshold="0" bindscrolltoupper="toUpperLoad">
+      <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}">
         <template is="group-list" wx:for="{{groupList.group}}" wx:key="id" wx:if="{{!groupList.empty}}" data="{{...item}}"></template>
       </scroll-view>
     </swiper-item>

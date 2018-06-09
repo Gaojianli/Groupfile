@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -51,6 +51,12 @@
 					"id": -1,
 					"name": "checkout",
 					"pathName": "pages/checkToLogin/checkToLogin",
+					"query": "session=dsajkhjkskjskajn"
+				},
+				{
+					"id": -1,
+					"name": "checkout",
+					"pathName": "pages/help/help",
 					"query": "session=dsajkhjkskjskajn"
 				}
 			]

@@ -43,7 +43,7 @@ let remove_userid = (userid, type) => {
 }
 let get_user = (cookie) => {
     return new Promise((rec, rej) => {
-        session_cookie.findOne({ session_cookie: cookie }).populate('user_id').exec((err, rew) => {
+        session_cookie.findOne({ session_cookie: cookie }).exec((err, rew) => {
             if (err) console.log(err);
             if (global.conf.debug) console.log(rew);
             if (rew) {
@@ -55,9 +55,37 @@ let get_user = (cookie) => {
         })
     })
 }
+let add_user_id = (cookie, user_id) => {
+    remove_userid(user_id, 'web');
+    return new Promise((rec, rej) => {
+        session_cookie.findOne({ session_cookie: cookie }).exec(async(err, rew) => {
+            if (err) console.log(err);
+            if (global.conf.debug) console.log(rew);
+            if (rew) {
+                rew.user_id = user_id;
+                await rew.save();
+                rec(rew.user_id);
+            } else {
+                rec(null);
+            }
+
+        })
+    })
+}
+let find_user_all_cookie = (user_id) => {
+    return new Promise((rec, rej) => {
+        session_cookie.find({ user_id: user_id }, (err, rew) => {
+            if (err) console.log(err);
+            if (global.conf.debug) console.log(rew);
+            rec(rew);
+        })
+    })
+}
 module.exports = {
     new_cookie: new_cookie,
     update_cookie: update_cookie,
     remove_userid: remove_userid,
-    get_user: get_user
+    get_user: get_user,
+    add_user_id: add_user_id,
+    find_user_all_cookie: find_user_all_cookie
 }
