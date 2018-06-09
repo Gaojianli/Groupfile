@@ -1,10 +1,4 @@
 let mongoose = require('mongoose');
-let random = new Promise((rec, rej) => {
-    require('crypto').randomBytes(16, function(ex, buf) {
-        var token = buf.toString('hex');
-        rec(token);
-    });
-})
 let db = require('./db');
 mongoose.connect(global.conf.mongodb.url, { config: { autoIndex: false } });
 db.session_cookie_list.index({ session_cookie: 1 });
@@ -13,7 +7,7 @@ db.session_cookie_list.statics.find_session_cookie = function(session_cookie, ca
 }
 let session_cookie = mongoose.model('session_cookie_list', db.session_cookie_list);
 let new_cookie = async(type, userid) => {
-    let token = await random;
+    let token = require('crypto').randomBytes(16).toString('hex');
     let a_cookie = new session_cookie({
         session_cookie: token,
         available: type,

@@ -2,6 +2,19 @@ let user_info = require('../sql/user');
 let session_token = require('../sql/session');
 let file_info = require('../sql/file');
 let delet = require('./_fileio').delete_file;
+let push_delet_msg = (user, file_id) => {
+    return session_token.find_user_all_cookie(user)
+        .then((rew) => {
+            return new Promise(async(rec, rej) => {
+                for (const cookie of rew) {
+                    if (cookie.session_cookie in global.ws.upload && global.ws.upload[cookie.session_cookie].readyState == 1) {
+                        global.ws.upload[cookie.session_cookie].send(JSON.stringify({ success: "removeFile", id: file_id }));
+                    }
+                }
+                rec(true);
+            });
+        })
+}
 module.exports = async(ctx, next) => {
     let post = ctx.request.body;
     let user = await session_token.get_user(post.session_cookie);
@@ -19,6 +32,7 @@ module.exports = async(ctx, next) => {
             if (await delet(file.real_url)) {
                 await file_info.remove_file(post.file_id);
                 ctx.response.body = JSON.stringify({ success: true });
+                await push_delet_msg(user, post.file_id);
                 return;
             } else {
                 ctx.response.body = JSON.stringify({ success: false, error: "删除文件失败，请和开发者联系" });
@@ -44,6 +58,7 @@ module.exports = async(ctx, next) => {
             user.file_list.splice(index, 1);
             await user.save()
             ctx.response.body = JSON.stringify({ success: true });
+            await push_delet_msg(user._id, post.file_id);
             return;
         } else {
             ctx.response.body = JSON.stringify({ success: false, error: "文件不存在。" });

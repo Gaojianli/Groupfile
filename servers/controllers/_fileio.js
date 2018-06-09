@@ -1,16 +1,10 @@
 let fs = require('fs');
 let join = require('path').join;
 let os = require('os');
-let random = new Promise((rec, rej) => {
-    require('crypto').randomBytes(32, function(ex, buf) {
-        var token = buf.toString('hex');
-        rec(token);
-    });
-})
 let upload_file = (file) => {
     return new Promise(async(rec, rej) => {
         let conf = global.conf.upload.conf;
-        let random_name = await random;
+        let random_name = require('crypto').randomBytes(32).toString('hex');
         if (global.conf.upload.type == 'local') {
             fs.writeFileSync(join(conf.path, random_name), fs.readFileSync(file.path));
             rec('local://' + join(conf.path, random_name));
