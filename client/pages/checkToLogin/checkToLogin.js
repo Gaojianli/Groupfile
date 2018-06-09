@@ -88,7 +88,7 @@ Page({
   },
   goBack: ()=>{
     wx.reLaunch({
-      url:'/pages/index/index'
+      url: '/pages/index/index',
     })
   }
 })

@@ -22,7 +22,8 @@ Page({
       empty: true,
       loaded: false,
       group: []
-    }
+    },
+    wsenable: true
   },
   // 滚动切换标签样式
   switchTab: function (e) {
@@ -202,8 +203,14 @@ Page({
               url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
             })
           } else {
-            wx.showToast({
+            // wx.showToast({
+            //   title: '二维码无效',
+            // })
+            wx.showModal({
               title: '二维码无效',
+              content: '请扫描指定的二维码才能登陆',
+              showCancel: false,
+              confirmText: "知道了"
             })
           }
           console.log(res)
@@ -214,6 +221,10 @@ Page({
         url: '/pages/help/help',
       })
     }
+  },
+  onUnload: function(){
+    this.setData({ wsenable: false});
+    wx.closeSocket();
   }
 })
 app.groupOnLoadFunc = (that) => {
@@ -341,6 +352,10 @@ const fullDownTheLoad = (that, time, type) => {
   })
 }
 const initWSconnect = (that)=>{
+  if(!that.data.wsenable){
+    return;
+  }
+  that.setData({ wsenable:false});
   wx.connectSocket({
     url: 'wss://asdf.zhr1999.club/api/uploadListen',
   })
@@ -356,6 +371,12 @@ const initWSconnect = (that)=>{
       })
     })
   })
+  wx.onSocketClose(function (res) {
+    if(that.data.wsenable)
+      wx.connectSocket({
+        url: 'wss://asdf.zhr1999.club/api/uploadListen',
+      })
+  })
   wx.onSocketMessage(function(res){
     try{
       let rec = JSON.parse(res.data)
@@ -370,6 +391,22 @@ const initWSconnect = (that)=>{
           that.data.filelist.data.push(data);
           that.setData({
             "filelist.empty": false,
+            "filelist.data": that.data.filelist.data,
+            "filelist.loaded": true,
+          })
+        }
+      } else if (rec.success == "removeFile"){
+        let index = -1;
+        for (let f in that.data.filelist.data){
+          if (that.data.filelist.data[f].id == rec.id){
+            index = f;
+            break;
+          }
+        }
+        if(index > -1){
+          that.data.filelist.data.splice(index,1);[].len
+          that.setData({
+            "filelist.empty": that.data.filelist.data.length>0?false:true,
             "filelist.data": that.data.filelist.data,
             "filelist.loaded": true,
           })

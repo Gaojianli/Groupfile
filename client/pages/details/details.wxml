@@ -1,5 +1,5 @@
 <!--pages/details/details.wxml-->
-<view class="body" wx:if="{{loaded}}">
+<view class="body" style="height:{{winHeight}}px" wx:if="{{loaded && !error}}">
   <view>
     <image src='https://asdf.zhr1999.club/resource/icons/{{type}}.svg' class='icon'></image>
   </view>
@@ -15,5 +15,9 @@
   
   <button class='button' wx:if="{{downloaded}}" bindtap='open' style='margin-top: 60rpx;'>打开</button>
   <button class='button' open-type="share"  style='margin-top: 30rpx;'>分享</button>
+  <button class='button' bindtap="goBack"  style='margin-top: 30rpx;' wx:if="{{fromShare}}">返回</button>
+</view>
+<view class="body" style="height:{{winHeight}}px" wx:if="{{error}}">
+  <view>Sorry，文件已经不存在了。</view>
   <button class='button' bindtap="goBack"  style='margin-top: 30rpx;' wx:if="{{fromShare}}">返回</button>
 </view>
