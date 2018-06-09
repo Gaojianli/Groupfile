@@ -29,8 +29,8 @@ let push_upload_msg = (rew, file_id) => {
         out.upload_time = d.Format('yy-MM-dd hh:mm');
         out.name = file.name;
         out.type = file.type;
-        console.log(cookie.session_cookie);
         for (const cookie of rew) {
+            if (global.conf.debug) console.log(cookie.session_cookie);
             if (cookie.session_cookie in global.ws.upload && global.ws.upload[cookie.session_cookie].readyState == 1) {
                 global.ws.upload[cookie.session_cookie].send(JSON.stringify({ success: "uploadListen", file: out }));
             }

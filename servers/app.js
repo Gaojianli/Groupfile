@@ -25,5 +25,5 @@ app.use(async(ctx, next) => {
     await next();
 })
 app.use(route.common);
-app.listen(8082);
+app.listen(8082, '127.0.0.1');
 console.log('app started at port 8082...');
