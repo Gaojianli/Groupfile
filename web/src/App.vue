@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%">
+  <div style="min-height:100vh">
     <mu-flex direction="column" justify-content="between" id="app">
       <mu-appbar style="width: 100%;" color="primary">
         <mu-button icon slot="left" v-if="$store.state.loginStatus.login">
@@ -54,7 +54,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height:100%;
+  min-height:100vh;
 }
 .footer{
   border-top:1px solid gray;
