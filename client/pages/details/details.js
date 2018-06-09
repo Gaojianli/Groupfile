@@ -16,13 +16,16 @@ Page({
   data: {
     downloaded: false,
     downloading: false,
+    winHeight: null,
+    windowWidth: null,
     type: null,
     percent:0,
     id: null,
     time: null,
     name: null,
     loaded: false,
-    fromShare:false
+    fromShare:false,
+    error: false
   },
 
   /**
@@ -30,6 +33,8 @@ Page({
    */
   onLoad: async function (options) {
     var that = this;
+    var loginStatusCallbackLock = false;
+    var shareTicketCallbackLock = false;
     //  高度自适应
     await new Promise((rec, rej) => {
       wx.getSystemInfo({
@@ -45,7 +50,11 @@ Page({
         }
       });
     })
-    if (app.globalData.loginStatus) {
+    app.loginStatusCallback = ()=>{
+      if (loginStatusCallbackLock){
+        return;
+      }
+      loginStatusCallbackLock = true;
       wx.request({
         url: 'https://asdf.zhr1999.club/api/getFileInfo',
         method: "POST",
@@ -66,12 +75,18 @@ Page({
             file.name = res.data.file.name
             file.type = res.data.file.type
           }
-          else
-            console.error(res)
+          else{
+            this.setData({ error: true })
+            console.log(res)
+          }
         }
       })
     }
     app.shareTicketCallback = (sTicket) => {
+      if(shareTicketCallbackLock){
+        return;
+      }
+      shareTicketCallbackLock = true;
       console.log(sTicket);
       wx.getShareInfo({
         shareTicket: app.globalData.shareTicket,
@@ -94,20 +109,23 @@ Page({
                   time: res.data.file.upload_time,
                   name: res.data.file.name,
                   loaded: true,
-                  fromShare: true
                 })
                 file.id = options.id
                 file.name = res.data.file.name
                 file.type = res.data.file.type
-              }
+              }else
+                this.setData({ error: true })
               console.log(res)
             }
           })
         }
       })
     }
-    if (app.globalData.shareTicket){
+    if (getCurrentPages().length == 1) {
+      this.setData({ fromShare: true });
       app.shareTicketCallback(app.globalData.shareTicket);
+    }else{
+      app.loginStatusCallback();
     }
   },
 
@@ -161,7 +179,7 @@ Page({
     })
   },
   goBack: ()=>{
-    wx.navigateTo({
+    wx.reLaunch({
       url: '/pages/index/index',
     })
   },
