@@ -22,7 +22,8 @@ Page({
       empty: true,
       loaded: false,
       group: []
-    }
+    },
+    wsenable: true
   },
   // 滚动切换标签样式
   switchTab: function (e) {
@@ -122,6 +123,7 @@ Page({
         wx.hideLoading()
         wx.stopPullDownRefresh();
       }
+      initWSconnect(this);
       //获取文件列表
     }
     if (app.globalData.cookie) {
@@ -148,11 +150,14 @@ Page({
     }
   },
   footerTap: app.footerTap,
+  bindscroll: function(e){
+    console.log(e);
+  },
   toUpperLoad: async function (e) {
     var that = this
     if (that.data.refreshing) return
     that.setData({ refreshing: true })
-    let downPromise = fullDownTheLoad(this, 200, 'down')
+    setTimeout(() => { that.setData({ refreshing: false })},10000)
     let reloadPromise = null;
     //刷新请求
     if (this.data.currentTab == 0) {
@@ -184,24 +189,42 @@ Page({
         })
       })
     }
-    await Promise.all([downPromise, reloadPromise]);
-    await fullDownTheLoad(this, 200, 'up');
+    await fullDownTheLoad(this, 50, 'down').then(reloadPromise).then(fullDownTheLoad(this, 50, 'up'))
   },
   scanCode: function (e) {
-    //show help
-    if (!app.globalData.showHelpStatus) {
-      wx.showModal({
-        title: '如何使用？',
-        content: '由于微信小程序的限制，您只能通过扫码登录的方式在网页端进行上传操作',
-        showCancel: false,
-        confirmText: '我知道了',
-        success: () => {
-          app.globalData.showHelpStatus = true
-          scanQR()
+    let neverHelp = wx.getStorageSync('neverHelp');
+    if (neverHelp) {
+      wx.scanCode({
+        scanType: 'qrCode',
+        success: (res) => {
+          let strs = res.result.split("=");
+          if (strs[0] == "https://asdf.zhr1999.club/api/scanCode?cookie") {
+            wx.navigateTo({
+              url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
+            })
+          } else {
+            // wx.showToast({
+            //   title: '二维码无效',
+            // })
+            wx.showModal({
+              title: '二维码无效',
+              content: '请扫描指定的二维码才能登陆',
+              showCancel: false,
+              confirmText: "知道了"
+            })
+          }
+          console.log(res)
         }
       })
-    } else
-      scanQR()
+    }else{
+      wx.navigateTo({
+        url: '/pages/help/help',
+      })
+    }
+  },
+  onUnload: function(){
+    this.setData({ wsenable: false});
+    wx.closeSocket();
   }
 })
 app.groupOnLoadFunc = (that) => {
@@ -272,9 +295,9 @@ const getFileList = (cookie, that, start, num) => {
               isFileListOut: isOut
             })
           }
+          resolve(true);
         }
       })
-      resolve(true);
     }
   })
 }
@@ -307,12 +330,12 @@ const loadThePage = (that) => {
   }
 }
 const fullDownTheLoad = (that, time, type) => {
-  let sleep = new Promise((rec) => {
-    setTimeout(rec, 1);
+  var sleep = new Promise((rec) => {
+    setTimeout(()=>{rec(true)}, 1);
   })
   return new Promise(async (rec) => {
-    let now = 0;
-    while (now == time) {
+    let now = 1;
+    while (now <= time) {
       if (type == 'down') {
         that.setData({
           refreshHeight: 50 * (1 - 2 * (now / time - 1) * (now / time - 1))
@@ -328,28 +351,69 @@ const fullDownTheLoad = (that, time, type) => {
     rec(true);
   })
 }
-
-const scanQR = () => {
-  wx.scanCode({
-    scanType: 'qrCode',
-    success: (res) => {
-      let strs = res.result.split("=");
-      if (strs[0] == "https://asdf.zhr1999.club/api/scanCode?cookie") {
-        wx.navigateTo({
-          url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
-        })
-      } else {
-        wx.showModal({
-          title: '二维码无效！',
-          content: '请重试',
-          showCancel: false,
-          confirmText: "确定",
-          success: () => {
-            scanQR();
+const initWSconnect = (that)=>{
+  if(!that.data.wsenable){
+    return;
+  }
+  that.setData({ wsenable:false});
+  wx.connectSocket({
+    url: 'wss://asdf.zhr1999.club/api/uploadListen',
+  })
+  let ws = new Promise((rec,rej)=>{
+    wx.onSocketOpen(rec);
+    wx.onSocketError(rej);
+  })
+  ws.then((header)=>{
+    return new Promise((rec,rej)=>{
+      wx.sendSocketMessage({
+        data: app.globalData.cookie,
+        success: rec
+      })
+    })
+  })
+  wx.onSocketClose(function (res) {
+    if(that.data.wsenable)
+      wx.connectSocket({
+        url: 'wss://asdf.zhr1999.club/api/uploadListen',
+      })
+  })
+  wx.onSocketMessage(function(res){
+    try{
+      let rec = JSON.parse(res.data)
+      if (rec.success == "uploadListen") {
+        if ('file' in rec) {
+          let i = rec.file;
+          let data = {};
+          data.fileName = i.name
+          data.uploadTime = i.upload_time
+          data.type = i.type
+          data.id = i._id
+          that.data.filelist.data.push(data);
+          that.setData({
+            "filelist.empty": false,
+            "filelist.data": that.data.filelist.data,
+            "filelist.loaded": true,
+          })
+        }
+      } else if (rec.success == "removeFile"){
+        let index = -1;
+        for (let f in that.data.filelist.data){
+          if (that.data.filelist.data[f].id == rec.id){
+            index = f;
+            break;
           }
-        })
+        }
+        if(index > -1){
+          that.data.filelist.data.splice(index,1);[].len
+          that.setData({
+            "filelist.empty": that.data.filelist.data.length>0?false:true,
+            "filelist.data": that.data.filelist.data,
+            "filelist.loaded": true,
+          })
+        }
       }
-      console.log(res)
+    } catch(err){
+      console.log(res.data)
     }
   })
 }

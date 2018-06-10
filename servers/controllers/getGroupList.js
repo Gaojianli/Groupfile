@@ -10,7 +10,7 @@ module.exports = async(ctx, next) => {
         ctx.response.body = JSON.stringify({ success: false, error: 'cookie过期，请重试' });
         return;
     }
-    let group_list = await user_info.find_group_list(user._id);
+    let group_list = await user_info.find_group_list(user);
     ctx.response.body = JSON.stringify({
         success: true,
         num: group_list.length,
