@@ -294,6 +294,12 @@ const getFileList = (cookie, that, start, num) => {
               "filelist.loaded": true,
               isFileListOut: isOut
             })
+          }else{
+            that.setData({
+              "filelist.empty": true,
+              "filelist.data": [],
+              "filelist.loaded": true,
+            })
           }
           resolve(true);
         }

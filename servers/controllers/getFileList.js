@@ -63,7 +63,7 @@ module.exports = async(ctx, next) => {
         files = await user_info.find_file_list(user, post.first, post.num);
     }
     let empty = true;
-    if (files) {
+    if (files.length > 0) {
         empty = false;
     }
     let tmp = [];
