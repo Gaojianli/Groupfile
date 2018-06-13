@@ -71,7 +71,7 @@
             </div>
             <mu-button slot="actions" flat color="primary" @click="closeSimpleDialog">关闭</mu-button>
         </mu-dialog>
-        <mu-dialog title="你要怎么删除文件?" width="600" max-width="80%" :esc-press-close="false" :overlay-close="false" :open.sync="openAlert">
+        <mu-dialog title="你要怎么删除文件么?" width="600" max-width="80%" :esc-press-close="false" :overlay-close="false" :open.sync="openAlert">
             从列表中移除只会在自己的列表中移除
             <br>完全删除的文件将不可恢复,所有该文件的分享也将失效(只有文件上传者可以这样做)
             <br>你确定要删除:<em style="font-weight:bold;">{{deletfile.name}}</em>么?
