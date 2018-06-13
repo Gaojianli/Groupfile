@@ -65,7 +65,7 @@
                     <div class="border m-2 d-inline-block p-4" style="width:15rem" v-for="file in files" :key="file.lastModified">
                         <h5 class="mt-0">{{ file.name }}</h5>
                         <div class="progress">
-                            <mu-linear-progress :value="file.uploadPercentage" mode="determinate" color="#51A8DD"></mu-linear-progress>
+                            <mu-linear-progress :value="file.uploadPercentage" mode="determinate" color="{{file.color}}"></mu-linear-progress>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,8 @@ export default {
         uploadFile: function (file) {
             var item = {
                 name: file.name,
-                uploadPercentage: 0
+                uploadPercentage: 0,
+                color:"#51A8DD"
             };
             this.files.push(item);
             var fd = new FormData();
@@ -167,6 +168,8 @@ export default {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://asdf.zhr1999.club/api/upload', true);
             xhr.upload.addEventListener('progress', function (e) {
+                if(e.loaded==e.total)
+                item.color="#86c166"
                 item.uploadPercentage = Math.round((e.loaded * 100) / e.total);
             }, false);
             xhr.send(fd);
