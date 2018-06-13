@@ -78,6 +78,7 @@ image.file-icon {
 
 .list-item {
   border: 1px solid #eee;
+  margin-top: 6rpx;
   width: 96%;
   display: flex;
   flex-direction: row;
@@ -85,7 +86,7 @@ image.file-icon {
   margin-bottom: 15rpx;
   margin-left: 1%;
   margin-right: 2%;
-  box-shadow: 2px 2px 2px #eee;
+  box-shadow: 3px 3px 3px #bdbdbd;
 }
 
 view.text-box {
@@ -121,8 +122,8 @@ text.file-time {
   border-radius: 50%;
   overflow: hidden;
   z-index: 500;
-  border: 1px solid #eee;
-  box-shadow: 2px 2px 2px #eee;
+  border: 1px solid #51a8dd;
+  box-shadow: 3px 7px 10px #bdbdbd;
 }
 
 .com-widget-scanCode .icon-scanCode {
@@ -130,8 +131,8 @@ text.file-time {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 130rpx;
-  min-height: 130rpx;
+  min-width: 110rpx;
+  min-height: 110rpx;
   line-height: 70rpx;
   font-size: 12px;
   color: #fff;
@@ -141,7 +142,7 @@ text.file-time {
   -webkit-background-size: 130rpx auto;
 }
 .icon-scanCode>text{
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 /*!
