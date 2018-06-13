@@ -79,14 +79,14 @@ image.file-icon {
 .list-item {
   border: 1px solid #eee;
   margin-top: 6rpx;
-  width: 96%;
+  width: 95%;
   display: flex;
   flex-direction: row;
   padding: 1%;
   margin-bottom: 15rpx;
   margin-left: 1%;
-  margin-right: 2%;
-  box-shadow: 3px 3px 3px #bdbdbd;
+  margin-right: 3%;
+  box-shadow: 3px 3px 3px #e0e0e0;
 }
 
 view.text-box {
