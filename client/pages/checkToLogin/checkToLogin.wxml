@@ -1,6 +1,6 @@
 <!--pages/checkToLogin/checkToLogin.wxml-->
 <view class="common-view" style='height:{{winHeight}}px'>
-  <icon type="success" size="100" color="#51A8DD"/>
+  <icon type="success" size="100" color="#51A8DD" />
   <view class="note-tital">
     正在登录网页版群文件分享，请确认是本人操作。
   </view>
