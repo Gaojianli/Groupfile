@@ -4,7 +4,7 @@ var util = require("../../utils/util.js")
 import regeneratorRuntime from "../../utils/runtime.js"
 Page({
   data: {
-    winHeight: "",//窗口高度
+    winHeight: "", //窗口高度
     currentTab: 0, //预设当前项的值
     scrollLeft: 0, //tab标题的滚动条位置
     refreshHeight: -50,
@@ -12,6 +12,7 @@ Page({
     userInfo: "",
     loginStatus: false,
     hasUserInfo: false, //TODO: 可以移除
+    needToRelod: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     filelist: {
       empty: true,
@@ -36,8 +37,7 @@ Page({
   // 点击标题切换当前页时改变样式
   swichNav: function (e) {
     var cur = e.target.dataset.current;
-    if (this.data.currentTaB == cur) { return false; }
-    else {
+    if (this.data.currentTaB == cur) { return false; } else {
       this.setData({
         currentTab: cur
       })
@@ -116,12 +116,9 @@ Page({
         })
         await getFileList(app.globalData.cookie, this);
         wx.hideLoading()
-        wx.stopPullDownRefresh();
-      }
-      else {
+      } else {
         await getFileList(app.globalData.cookie, this);
         wx.hideLoading()
-        wx.stopPullDownRefresh();
       }
       initWSconnect(this);
       //获取文件列表
@@ -150,14 +147,14 @@ Page({
     }
   },
   footerTap: app.footerTap,
-  bindscroll: function(e){
+  bindscroll: function (e) {
     console.log(e);
   },
   toUpperLoad: async function (e) {
     var that = this
     if (that.data.refreshing) return
     that.setData({ refreshing: true })
-    setTimeout(() => { that.setData({ refreshing: false })},10000)
+    setTimeout(() => { that.setData({ refreshing: false }) }, 10000)
     let reloadPromise = null;
     //刷新请求
     if (this.data.currentTab == 0) {
@@ -208,7 +205,7 @@ Page({
             // })
             wx.showModal({
               title: '二维码无效',
-              content: '请扫描指定的二维码才能登陆',
+              content: '请扫描指定的二维码才能登录',
               showCancel: false,
               confirmText: "知道了"
             })
@@ -216,15 +213,20 @@ Page({
           console.log(res)
         }
       })
-    }else{
+    } else {
       wx.navigateTo({
         url: '/pages/help/help',
       })
     }
   },
-  onUnload: function(){
-    this.setData({ wsenable: false});
+  onUnload: function () {
+    this.setData({ wsenable: false });
     wx.closeSocket();
+  },
+  reloadThePage: function () {
+    wx.reLaunch({
+      url: '/pages/index/index',
+    })
   }
 })
 app.groupOnLoadFunc = (that) => {
@@ -252,7 +254,13 @@ app.groupOnLoadFunc = (that) => {
         "groupList.loaded": true
       });
       wx.hideLoading();
-      wx.stopPullDownRefresh();
+      if (!res.data.success) {
+        wx.removeStorageSync("cookie");
+        util.loginCus(app);
+        that.setData({
+          needToRelod: true
+        })
+      }
     }
   })
 }
@@ -294,7 +302,14 @@ const getFileList = (cookie, that, start, num) => {
               "filelist.loaded": true,
               isFileListOut: isOut
             })
-          }else{
+          } else {
+            if (!res.data.success) {
+              wx.removeStorageSync("cookie");
+              util.loginCus(app);
+              that.setData({
+                needToRelod: true
+              })
+            }
             that.setData({
               "filelist.empty": true,
               "filelist.data": [],
@@ -337,7 +352,7 @@ const loadThePage = (that) => {
 }
 const fullDownTheLoad = (that, time, type) => {
   var sleep = new Promise((rec) => {
-    setTimeout(()=>{rec(true)}, 1);
+    setTimeout(() => { rec(true) }, 1);
   })
   return new Promise(async (rec) => {
     let now = 1;
@@ -357,20 +372,21 @@ const fullDownTheLoad = (that, time, type) => {
     rec(true);
   })
 }
-const initWSconnect = (that)=>{
-  if(!that.data.wsenable){
+const initWSconnect = (that) => {
+  //wx.closeSocket();
+  if (!that.data.wsenable) {
     return;
   }
-  that.setData({ wsenable:false});
+  that.setData({ wsenable: false });
   wx.connectSocket({
     url: 'wss://asdf.zhr1999.club/api/uploadListen',
   })
-  let ws = new Promise((rec,rej)=>{
+  let ws = new Promise((rec, rej) => {
     wx.onSocketOpen(rec);
     wx.onSocketError(rej);
   })
-  ws.then((header)=>{
-    return new Promise((rec,rej)=>{
+  ws.then((header) => {
+    return new Promise((rec, rej) => {
       wx.sendSocketMessage({
         data: app.globalData.cookie,
         success: rec
@@ -378,13 +394,13 @@ const initWSconnect = (that)=>{
     })
   })
   wx.onSocketClose(function (res) {
-    if(that.data.wsenable)
+    if (that.data.wsenable)
       wx.connectSocket({
         url: 'wss://asdf.zhr1999.club/api/uploadListen',
       })
   })
-  wx.onSocketMessage(function(res){
-    try{
+  wx.onSocketMessage(function (res) {
+    try {
       let rec = JSON.parse(res.data)
       if (rec.success == "uploadListen") {
         if ('file' in rec) {
@@ -401,24 +417,24 @@ const initWSconnect = (that)=>{
             "filelist.loaded": true,
           })
         }
-      } else if (rec.success == "removeFile"){
+      } else if (rec.success == "removeFile") {
         let index = -1;
-        for (let f in that.data.filelist.data){
-          if (that.data.filelist.data[f].id == rec.id){
+        for (let f in that.data.filelist.data) {
+          if (that.data.filelist.data[f].id == rec.id) {
             index = f;
             break;
           }
         }
-        if(index > -1){
-          that.data.filelist.data.splice(index,1);[].len
+        if (index > -1) {
+          that.data.filelist.data.splice(index, 1);
           that.setData({
-            "filelist.empty": that.data.filelist.data.length>0?false:true,
+            "filelist.empty": that.data.filelist.data.length > 0 ? false : true,
             "filelist.data": that.data.filelist.data,
             "filelist.loaded": true,
           })
         }
       }
-    } catch(err){
+    } catch (err) {
       console.log(res.data)
     }
   })

@@ -8,7 +8,7 @@ Page({
   data: {
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    winHeight:null,
+    winHeight: null,
     webSession: null,
   },
 
@@ -17,26 +17,26 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      hasUserInfo: app.globalData.userInfo?true:false,
+      hasUserInfo: app.globalData.userInfo ? true : false,
       winHeight: app.globalData.winHeight,
       webSession: options.session
     })
   },
-  getUserInfo: function(e){
+  getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     wx.request({
       url: 'https://asdf.zhr1999.club/api/completeInfo',
-      data:{
+      data: {
         session_cookie: app.globalData.cookie,
         encryptedData: e.detail.encryptedData,
         vi: e.detail.iv
       },
-      method:"POST",
-      success: (rec)=>{
-        if(rec.data.success){
+      method: "POST",
+      success: (rec) => {
+        if (rec.data.success) {
           this.loginWeb();
-        }else{
+        } else {
           wx.showToast({
             title: rec.data.error ? rec.data.error : '服务器繁忙，请重试。',
             icon: 'none',
@@ -53,7 +53,7 @@ Page({
       hasUserInfo: true
     })
   },
-  loginWeb: function(e){
+  loginWeb: function (e) {
     wx.request({
       url: 'https://asdf.zhr1999.club/api/scanCode',
       data: {
@@ -61,21 +61,21 @@ Page({
         web_session_cookie: this.data.webSession
       },
       method: "GET",
-      success: (rec)=>{
-        if(rec.data.success){
+      success: (rec) => {
+        if (rec.data.success) {
           wx.showToast({
-            title: '登陆成功',
+            title: '登录成功',
             icon: 'success',
             duration: 1000,
             mask: true,
-            success: ()=>{
-              setTimeout(this.goBack,1000);
+            success: () => {
+              setTimeout(this.goBack, 1000);
             }
           })
-        }else{
+        } else {
           wx.showToast({
-            title: rec.data.error ? rec.data.error:'服务器繁忙，请重试。',
-            icon:'none',
+            title: rec.data.error ? rec.data.error : '服务器繁忙，请重试。',
+            icon: 'none',
             duration: 2000,
             mask: true,
             success: () => {
@@ -86,7 +86,7 @@ Page({
       }
     })
   },
-  goBack: ()=>{
+  goBack: () => {
     wx.reLaunch({
       url: '/pages/index/index',
     })

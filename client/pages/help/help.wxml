@@ -8,11 +8,10 @@
     https://asdf.zhr1999.club
   </view>
   <view class="note-tital">
-    进行扫码登陆
+    进行扫码登录
   </view>
   <checkbox-group bindchange="checkboxChange">
-  <checkbox value="neverShow" checked="{{neverShowCheck}}">不再提示</checkbox>
+    <checkbox value="neverShow" checked="{{neverShowCheck}}">不再提示</checkbox>
   </checkbox-group>
   <button class='button' bindtap='goScan'>前往扫描</button>
 </view>
-
