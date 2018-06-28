@@ -33,7 +33,8 @@
         
         <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
         <view style='height:100%;display:flex;justify-content:center;' wx:if="{{filelist.empty}}">
-          <view class="null-text" >空空如也，快去上传文件吧</view>
+          <view class="null-text" wx:if="{{!needToRelod}}">空空如也，快去上传文件吧</view>
+          <view class="null-text" style='line-height:50vh;' wx:if="{{needToRelod}}" bindtap='reloadThePage'>与服务器断开连接，点击重新加载</view>
         </view>
       </scroll-view>
     </swiper-item>
@@ -41,7 +42,8 @@
       <scroll-view class="container" scroll-y="true" style="padding:0rpx;height:100%" wx:if="{{loginStatus}}">
         <template is="group-list" wx:for="{{groupList.group}}" wx:key="id" wx:if="{{!groupList.empty}}" data="{{...item}}"></template>
         <view style='height:100%;display:flex;justify-content:center;' wx:if="{{groupList.empty}}">
-          <view class="null-text" >空空如也，分享到群组吧</view>
+          <view class="null-text" wx:if="{{!needToRelod}}">空空如也，分享到群组吧</view>
+          <view class="null-text" style='line-height:50vh;' wx:if="{{needToRelod}}" bindtap='reloadThePage'>与服务器断开连接，点击重新加载</view>
         </view>
       </scroll-view>
     </swiper-item>

@@ -12,6 +12,7 @@ Page({
         userInfo: "",
         loginStatus: false,
         hasUserInfo: false, //TODO: 可以移除
+        needToRelod: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         filelist: {
             empty: true,
@@ -115,11 +116,9 @@ Page({
                 })
                 await getFileList(app.globalData.cookie, this);
                 wx.hideLoading()
-                wx.stopPullDownRefresh();
             } else {
                 await getFileList(app.globalData.cookie, this);
                 wx.hideLoading()
-                wx.stopPullDownRefresh();
             }
             initWSconnect(this);
             //获取文件列表
@@ -223,6 +222,11 @@ Page({
     onUnload: function() {
         this.setData({ wsenable: false });
         wx.closeSocket();
+    },
+    reloadThePage: function() {
+        wx.reLaunch({
+          url: '/pages/index/index',
+        })
     }
 })
 app.groupOnLoadFunc = (that) => {
@@ -250,7 +254,13 @@ app.groupOnLoadFunc = (that) => {
                 "groupList.loaded": true
             });
             wx.hideLoading();
-            wx.stopPullDownRefresh();
+            if (!res.data.success) {
+              wx.removeStorageSync("cookie");
+              util.loginCus(app);
+              that.setData({
+                needToRelod: true
+              })
+            }
         }
     })
 }
@@ -293,6 +303,13 @@ const getFileList = (cookie, that, start, num) => {
                             isFileListOut: isOut
                         })
                     } else {
+                        if (!res.data.success) {
+                          wx.removeStorageSync("cookie");
+                          util.loginCus(app);
+                          that.setData({
+                            needToRelod: true
+                          })
+                        }
                         that.setData({
                             "filelist.empty": true,
                             "filelist.data": [],
@@ -356,6 +373,7 @@ const fullDownTheLoad = (that, time, type) => {
     })
 }
 const initWSconnect = (that) => {
+    //wx.closeSocket();
     if (!that.data.wsenable) {
         return;
     }
@@ -409,7 +427,6 @@ const initWSconnect = (that) => {
                 }
                 if (index > -1) {
                     that.data.filelist.data.splice(index, 1);
-                    [].len
                     that.setData({
                         "filelist.empty": that.data.filelist.data.length > 0 ? false : true,
                         "filelist.data": that.data.filelist.data,
