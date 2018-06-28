@@ -58,14 +58,14 @@ export default {
     return {
       qrcodeUrl: "",
       logincode: null,
-      TextOnShow:"请使用微信小程序 群文件分享 扫码登陆",
+      TextOnShow:"请使用微信小程序 群文件分享 扫码登录",
       qroption: {
         bgColor: "#51A8DD",
         size: 500
       },
       normal: {
         position: 'top-end',
-        message: '登陆成功',
+        message: '登录成功',
         open: false,
         timeout: 3000
       },
@@ -124,7 +124,7 @@ export default {
         this.showWxQr=false;
         await sleep(500);
         this.qrcodeUrl = this.logincode;
-        this.TextOnShow = "请使用微信小程序 群文件分享 扫码登陆";
+        this.TextOnShow = "请使用微信小程序 群文件分享 扫码登录";
         this.showWxQr = true;
     }
     //   onclickit(e){
