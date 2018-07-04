@@ -6,12 +6,23 @@
   flex-direction: column;
 }
 .note-tital{
-  font-size: 120%;
+  font-size: 100%;
   padding: 50rpx;
+  text-align: center
+}
+.note-url{
+  font-size: 100%;
+  text-align: center;
 }
 .button{
   margin-top: 30rpx;
   color: #51A8DD;
   width: 500rpx;
   align-self: flex-end;
+}
+.url-box{
+  padding: 20rpx;
+  border-radius: 5px;
+  background-color: #ffff66;
+  border: 2px solid #DCDCDC ;
 }
