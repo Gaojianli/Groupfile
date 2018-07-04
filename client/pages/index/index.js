@@ -104,8 +104,10 @@ Page({
       await checkLoginStatus(this);
       var retryCount = 0
       while (!app.globalData.loginStatus) {
-        if (retryCount <= 5)
+        if (retryCount <= 5){
           await util.loginCus(app)
+          retryCount++
+        }
         else {
           wx.showToast({
             title: '登录失败！',
