@@ -102,24 +102,25 @@ Page({
         })
       }
       await checkLoginStatus(this);
-      if (!app.globalData.loginStatus) {
-        wx.showToast({
-          title: '登录失败！',
-          icon: 'loading',
-          duration: 1500,
-          success: () => {
-            // wx.reLaunch({
-            //   url: '../pages/exit/exit',
-            // })
-            console.log("退出");
-          }
-        })
-        await getFileList(app.globalData.cookie, this);
-        wx.hideLoading()
-      } else {
-        await getFileList(app.globalData.cookie, this);
-        wx.hideLoading()
+      var retryCount = 0
+      while (!app.globalData.loginStatus) {
+        if (retryCount <= 5)
+          await util.loginCus(app)
+        else
+          wx.showToast({
+            title: '登录失败！',
+            icon: 'loading',
+            duration: 1500,
+            success: () => {
+              // wx.reLaunch({
+              //   url: '../pages/exit/exit',
+              // })
+              console.log("退出");
+            }
+          })
       }
+      await getFileList(app.globalData.cookie, this);
+      wx.hideLoading()
       initWSconnect(this);
       //获取文件列表
     }
