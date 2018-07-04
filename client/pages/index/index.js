@@ -106,7 +106,7 @@ Page({
       while (!app.globalData.loginStatus) {
         if (retryCount <= 5)
           await util.loginCus(app)
-        else
+        else {
           wx.showToast({
             title: '登录失败！',
             icon: 'loading',
@@ -118,6 +118,8 @@ Page({
               console.log("退出");
             }
           })
+          break
+        }
       }
       await getFileList(app.globalData.cookie, this);
       wx.hideLoading()
