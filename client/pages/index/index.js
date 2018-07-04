@@ -122,6 +122,7 @@ Page({
           })
           break
         }
+        await checkLoginStatus(this);
       }
       await getFileList(app.globalData.cookie, this);
       wx.hideLoading()
