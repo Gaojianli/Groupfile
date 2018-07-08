@@ -166,6 +166,7 @@ Page({
 })
 
 const groupOnLoadFunc = (that) => {
+  if (that.data.needToRelod) return false;
   wx.showLoading({
     title: '加载中',
   })
