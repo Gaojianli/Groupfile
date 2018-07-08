@@ -1,5 +1,5 @@
 // pages/details/details.js
-import regeneratorRuntime from "../../utils/runtime.js"
+//import regeneratorRuntime from "../../utils/runtime.js"
 import utils from "../../utils/util.js"
 const app = getApp()
 var file = {
@@ -19,39 +19,36 @@ Page({
     winHeight: null,
     windowWidth: null,
     type: null,
-    percent:0,
+    percent: 0,
     id: null,
     time: null,
     name: null,
     loaded: false,
-    fromShare:false,
+    fromShare: false,
     error: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: async function (options) {
+  onLoad: function(options) {
     var that = this;
     var loginStatusCallbackLock = false;
     var shareTicketCallbackLock = false;
     //  高度自适应
-    await new Promise((rec, rej) => {
-      wx.getSystemInfo({
-        success: function (res) {
-          var calc = res.windowHeight
-          console.log(calc)
-          let windowWidth = res.windowWidth;
-          that.setData({
-            winHeight: calc,
-            windowWidth: windowWidth
-          });
-          rec(true);
-        }
-      });
-    })
-    app.loginStatusCallback = ()=>{
-      if (loginStatusCallbackLock){
+    wx.getSystemInfo({
+      success: function(res) {
+        var calc = res.windowHeight
+        console.log(calc)
+        let windowWidth = res.windowWidth;
+        that.setData({
+          winHeight: calc,
+          windowWidth: windowWidth
+        });
+      }
+    });
+    app.loginStatusCallback = () => {
+      if (loginStatusCallbackLock) {
         return;
       }
       loginStatusCallbackLock = true;
@@ -74,23 +71,25 @@ Page({
             file.id = options.id
             file.name = res.data.file.name
             file.type = res.data.file.type
-          }
-          else{
-            this.setData({ error: true })
+          } else {
+            this.setData({
+              error: true
+            })
             console.log(res)
           }
         }
       })
     }
     app.shareTicketCallback = (sTicket) => {
-      if(shareTicketCallbackLock){
+      if (shareTicketCallbackLock) {
         return;
       }
       shareTicketCallbackLock = true;
+      loginStatusCallbackLock = true;
       console.log(sTicket);
       wx.getShareInfo({
         shareTicket: app.globalData.shareTicket,
-        success: res =>{
+        success: res => {
           console.log(res);
           wx.request({
             url: 'https://asdf.zhr1999.club/api/openShare',
@@ -101,7 +100,7 @@ Page({
               encryptedData: res.encryptedData,
               vi: res.iv
             },
-            success: res=>{
+            success: res => {
               if (res.data.success) {
                 this.setData({
                   type: res.data.file.type,
@@ -113,8 +112,10 @@ Page({
                 file.id = options.id
                 file.name = res.data.file.name
                 file.type = res.data.file.type
-              }else
-                this.setData({ error: true })
+              } else
+                this.setData({
+                  error: true
+                })
               console.log(res)
             }
           })
@@ -122,25 +123,13 @@ Page({
       })
     }
     if (getCurrentPages().length == 1) {
-      this.setData({ fromShare: true });
+      this.setData({
+        fromShare: true
+      });
       app.shareTicketCallback(app.globalData.shareTicket);
-    }else{
+    } else {
       app.loginStatusCallback();
     }
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
   },
   onShareAppMessage: (res) => {
     wx.showShareMenu({
@@ -157,8 +146,8 @@ Page({
       }
     }
   },
-  download: async function () {
-    const downloadTask =  wx.downloadFile({
+  download: function() {
+    const downloadTask = wx.downloadFile({
       url: 'https://asdf.zhr1999.club/api/download?session_cookie=' + app.globalData.cookie + "&file_id=" + file.id,
       success: res => {
         console.log(res)
@@ -178,7 +167,7 @@ Page({
       })
     })
   },
-  goBack: ()=>{
+  goBack: () => {
     wx.reLaunch({
       url: '/pages/index/index',
     })
@@ -190,7 +179,7 @@ Page({
       fileType: file.type
     })
   },
-  bindanimationfinish: function(e){
+  bindanimationfinish: function(e) {
     this.goBack();
   }
 })
