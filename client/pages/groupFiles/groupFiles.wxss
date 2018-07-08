@@ -58,3 +58,8 @@ text.file-time{
   font-size: 20rpx;
   color: #bdbdbd;
 }
+.null-text {
+  margin-top: 50rpx;
+  color: rgb(130,130,130);
+  font-size: 30rpx;
+}

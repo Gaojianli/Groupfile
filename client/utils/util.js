@@ -16,50 +16,35 @@ const formatNumber = n => {
 
 const loginCus = (app) => {
   return new Promise((resolve) => {
-    try {
-      var value = wx.getStorageSync('cookie')
-      wx.checkSession({
-        success: () => {
-          app.globalData.cookie = value
-          app.globalData.loginStatus = true
-        },
-        complete: () => {
-          if (value == "")
-            wx.login({
-              success: res => {
-                if (res.code) {
-                  wx.request({
-                    url: 'https://asdf.zhr1999.club/api/login',
-                    data: {
-                      code: res.code
-                    },
-                    method: "GET",
-                    success: res => {
-                      console.log(res)
-                      if (res) {
-                        app.globalData.cookie = res.data.session_cookie
-                        app.globalData.loginStatus = true
-                        wx.setStorage({
-                          key: "cookie",
-                          data: res.data.session_cookie
-                        })
-                      }
-                      resolve(true);
-                    }
-                  })
-                } else {
-                  console.log('登录失败！' + res.errMsg)
-                  app.globalData.loginStatus = false
-                  resolve(false);
-                }
-              }
-            })
-          else
-            resolve(true);
-        }
-      })
-    } catch (e) {
-      console.log(e);
+    wx.login({
+      success: res => {
+        wx.request({
+          url: 'https://asdf.zhr1999.club/api/login',
+          data: {
+            code: res.code
+          },
+          method: "GET",
+          success: res => {
+            if (res.data.sess) {
+              console.log(res)
+              resolve({ session: true, cookie: res.data.session_cookie });
+            } else {
+              console.log('登录失败！' + res.data)
+              resolve({ session: false });
+            }
+          }
+        })
+      }
+    })
+  }).then((loginObj) => {
+    if (loginObj.session) {
+      wx.setStorageSync("cookie", loginObj.cookie)
+      app.globalData.cookie = loginObj.cookie;
+      app.globalData.loginStatus = true;
+      return true;
+    } else {
+      app.globalData.loginStatus = false;
+      return false;
     }
   })
 }

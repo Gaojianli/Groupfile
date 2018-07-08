@@ -8,6 +8,9 @@
     </view>
   </view>
 </template>
-<view class="container" wx:if="{{loginStatus}}">
+<view class="container">
   <template is="fileList" wx:for="{{filelist.data}}" wx:key="id" wx:if="{{!filelist.empty}}" data="{{...item}}"></template>
+  <view style='height:100%;display:flex;justify-content:center;' wx:if="{{filelist.empty}}">
+    <view class="null-text">空空如也，快去上传文件吧</view>
+  </view>
 </view>
