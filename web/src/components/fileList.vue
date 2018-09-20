@@ -65,7 +65,7 @@
                     <div class="border m-2 d-inline-block p-4" style="width:15rem" v-for="file in files" :key="file.lastModified">
                         <h5 class="mt-0">{{ file.name }}</h5>
                         <div class="progress">
-                            <mu-linear-progress :value="file.uploadPercentage" mode="determinate" color="{{file.color}}"></mu-linear-progress>
+                            <mu-linear-progress :value="file.uploadPercentage" mode="determinate" :color="file.color"></mu-linear-progress>
                     </div>
                 </div>
             </div>

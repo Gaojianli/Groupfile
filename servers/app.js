@@ -27,3 +27,11 @@ app.use(async(ctx, next) => {
 app.use(route.common);
 app.listen(8082, '127.0.0.1');
 console.log('app started at port 8082...');
+process.addListener("SIGINT", (code) => {
+    console.log("Daemon exited, the code is " + code);
+    process.exit(code);
+})
+process.addListener("SIGTERM", (code) => {
+    console.log("Daemon exited, the code is " + code);
+    process.exit(code);
+})

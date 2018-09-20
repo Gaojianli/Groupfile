@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/groups/groups",
     "pages/details/details",
     "pages/groupFiles/groupFiles",
     "pages/checkToLogin/checkToLogin",

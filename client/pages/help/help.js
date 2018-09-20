@@ -9,13 +9,13 @@ Page({
     neverShowCheck: true,
     winHeight: null,
     webSession: null,
-  },  
-  checkboxChange: function(e){
+  },
+  checkboxChange: function (e) {
     this.setData({
-      neverShowCheck: this.data.neverShowCheck?false:true
+      neverShowCheck: this.data.neverShowCheck ? false : true
     })
   },
-  goScan: function(e){
+  goScan: function (e) {
     wx.setStorageSync("neverHelp", this.data.neverShowCheck);
     wx.scanCode({
       scanType: 'qrCode',
@@ -28,7 +28,7 @@ Page({
         } else {
           wx.showModal({
             title: '二维码无效',
-            content: '请扫描指定的二维码才能登陆',
+            content: '请扫描指定的二维码才能登录',
             showCancel: false,
             confirmText: "知道了"
           })
