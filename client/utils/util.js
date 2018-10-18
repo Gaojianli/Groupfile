@@ -19,7 +19,7 @@ const loginCus = (app) => {
     wx.login({
       success: res => {
         wx.request({
-          url: 'https://asdf.zhr1999.club/api/login',
+          url: 'https://groupfile.xice.wang/api/login',
           data: {
             code: res.code
           },

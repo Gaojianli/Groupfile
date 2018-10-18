@@ -26,7 +26,7 @@ Page({
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     wx.request({
-      url: 'https://asdf.zhr1999.club/api/completeInfo',
+      url: 'https://groupfile.xice.wang/api/completeInfo',
       data: {
         session_cookie: app.globalData.cookie,
         encryptedData: e.detail.encryptedData,
@@ -55,7 +55,7 @@ Page({
   },
   loginWeb: function (e) {
     wx.request({
-      url: 'https://asdf.zhr1999.club/api/scanCode',
+      url: 'https://groupfile.xice.wang/api/scanCode',
       data: {
         session_cookie: app.globalData.cookie,
         web_session_cookie: this.data.webSession

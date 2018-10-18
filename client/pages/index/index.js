@@ -131,7 +131,7 @@ Page({
         scanType: 'qrCode',
         success: (res) => {
           let strs = res.result.split("=");
-          if (strs[0] == "https://asdf.zhr1999.club/api/scanCode?cookie") {
+          if (strs[0] == "https://groupfile.xice.wang/api/scanCode?cookie") {
             wx.navigateTo({
               url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
             })
@@ -171,7 +171,7 @@ const groupOnLoadFunc = (that) => {
     title: '加载中',
   })
   wx.request({
-    url: 'https://asdf.zhr1999.club/api/getGroupList',
+    url: 'https://groupfile.xice.wang/api/getGroupList',
     method: 'POST',
     data: {
       session_cookie: app.globalData.cookie
@@ -212,7 +212,7 @@ const getFileList = (cookie, that, start, num) => {
       if (!num)
         num = 10
       wx.request({
-        url: 'https://asdf.zhr1999.club/api/getFileList',
+        url: 'https://groupfile.xice.wang/api/getFileList',
         data: {
           session_cookie: cookie,
           first: start,
@@ -269,7 +269,7 @@ const initWSconnect = (that) => {
     wsenable: false
   });
   wx.connectSocket({
-    url: 'wss://asdf.zhr1999.club/api/uploadListen',
+    url: 'wss://groupfile.xice.wang/api/uploadListen',
   })
   let ws = new Promise((rec, rej) => {
     wx.onSocketOpen(rec);
@@ -286,7 +286,7 @@ const initWSconnect = (that) => {
   wx.onSocketClose(function(res) {
     if (that.data.wsenable)
       wx.connectSocket({
-        url: 'wss://asdf.zhr1999.club/api/uploadListen',
+        url: 'wss://groupfile.xice.wang/api/uploadListen',
       })
   })
   wx.onSocketMessage(function(res) {
