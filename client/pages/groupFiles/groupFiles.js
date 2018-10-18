@@ -38,7 +38,7 @@ const getFileList = (openGid, cookie, that, start, num) => {
     if (!num)
       num = 10
     wx.request({
-      url: 'https://asdf.zhr1999.club/api/getFileList',
+      url: 'https://groupfile.xice.wang/api/getFileList',
       data: {
         session_cookie: cookie,
         openGid: openGid,

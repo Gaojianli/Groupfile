@@ -53,7 +53,7 @@ Page({
       }
       loginStatusCallbackLock = true;
       wx.request({
-        url: 'https://asdf.zhr1999.club/api/getFileInfo',
+        url: 'https://groupfile.xice.wang/api/getFileInfo',
         method: "POST",
         data: {
           session_cookie: app.globalData.cookie,
@@ -92,7 +92,7 @@ Page({
         success: res => {
           console.log(res);
           wx.request({
-            url: 'https://asdf.zhr1999.club/api/openShare',
+            url: 'https://groupfile.xice.wang/api/openShare',
             method: 'POST',
             data: {
               session_cookie: app.globalData.cookie,
@@ -138,7 +138,7 @@ Page({
     return {
       title: '我给你分享了文件' + file.name + ',快来看看吧!',
       path: '/pages/details/details?id=' + file.id + "&type=" + file.type + "&name=" + file.name + "&time=" + file.time,
-      imageUrl: 'https://asdf.zhr1999.club/resource/pngs/' + file.type + '.png',
+      imageUrl: 'https://groupfile.xice.wang/resource/pngs/' + file.type + '.png',
       success(res) {
         wx.showShareMenu({
           withShareTicket: true,
@@ -148,7 +148,7 @@ Page({
   },
   download: function() {
     const downloadTask = wx.downloadFile({
-      url: 'https://asdf.zhr1999.club/api/download?session_cookie=' + app.globalData.cookie + "&file_id=" + file.id,
+      url: 'https://groupfile.xice.wang/api/download?session_cookie=' + app.globalData.cookie + "&file_id=" + file.id,
       success: res => {
         console.log(res)
         this.setData({

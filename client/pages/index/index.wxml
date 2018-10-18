@@ -1,7 +1,7 @@
 <template name="fileList">
   <block>
     <view class='list-item' bindtap='showDetails' data-type="{{type}}" id="{{id}}" data-id="{{id}}" data-name="{{fileName}}" data-time='{{uploadTime}}'>
-      <image src="https://asdf.zhr1999.club/resource/icons/{{type}}.svg" class='file-icon'></image>
+      <image src="https://groupfile.xice.wang/resource/icons/{{type}}.svg" class='file-icon'></image>
       <view class='text-box'>
         <text class='file-name'> {{fileName}} </text>
         <text class="file-time"> {{uploadTime}}</text>
@@ -12,7 +12,7 @@
 <template name="group-list">
   <block>
     <view class='list-item' bindtap='showDetails' data-type="group" id="{{id}}" data-id="{{id}}">
-      <image src="https://asdf.zhr1999.club/resource/icons/group.svg" class='file-icon'></image>
+      <image src="https://groupfile.xice.wang/resource/icons/group.svg" class='file-icon'></image>
       <view class='text-box'>
         <open-data type="groupName" open-gid="{{id}}" />
       </view>

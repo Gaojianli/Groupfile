@@ -21,7 +21,7 @@ Page({
       scanType: 'qrCode',
       success: (res) => {
         let strs = res.result.split("=");
-        if (strs[0] == "https://asdf.zhr1999.club/api/scanCode?cookie") {
+        if (strs[0] == "https://groupfile.xice.wang/api/scanCode?cookie") {
           wx.navigateTo({
             url: '/pages/checkToLogin/checkToLogin?session=' + strs[1],
           })

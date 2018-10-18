@@ -1,7 +1,7 @@
 <!--pages/details/details.wxml-->
 <view class="body" style="height:{{winHeight}}px" wx:if="{{loaded && !error}}">
   <view>
-    <image src='https://asdf.zhr1999.club/resource/icons/{{type}}.svg' class='icon'></image>
+    <image src='https://groupfile.xice.wang/resource/icons/{{type}}.svg' class='icon'></image>
   </view>
   <view class='text'>
     <text class='name'>{{name}}</text>
