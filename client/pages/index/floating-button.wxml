@@ -1,0 +1,22 @@
+<!--
+{
+  "plusImage": "fa-upload", // 这之类的 仅支持fa图标
+  "plusColor": "#fff", // color
+  "plusbBckground": "#51a8dd", // background
+  "textBackground": "",
+  "textcolor": "",
+  "others":[
+    {
+      "Image": "",
+      "color": "",
+      "background" : "",
+      "text": ""
+    },
+    {...}
+  ]
+}
+
+  -->
+<template name="floating-button">
+
+</template>
