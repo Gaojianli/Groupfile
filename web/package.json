@@ -14,6 +14,7 @@
   "dependencies": {
     "@xkeshi/vue-qrcode": "github:xkeshi/vue-qrcode",
     "ajv": "^6.5.1",
+    "merge": "^1.2.1",
     "muse-ui": "^3.0.0-beta.3",
     "typeface-roboto": "0.0.54",
     "vue": "^2.5.2",
