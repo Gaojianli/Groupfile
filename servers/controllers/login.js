@@ -4,7 +4,7 @@ API login
 参数
     code:临时登录凭证code
 实例
-    https://asdf.zhr1999.club/api/login?code=dsafasdgadds
+    https://groupfile.xice.wang/api/login?code=dsafasdgadds
 返回
     类型:JSON
     例子:

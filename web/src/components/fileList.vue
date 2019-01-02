@@ -115,7 +115,7 @@ export default {
             this.$router.push('/');
         }
         this.$http.post(
-        "https://asdf.zhr1999.club/api/getFileList",
+        "https://groupfile.xice.wang/api/getFileList",
         {'session_cookie': this.$store.state.loginStatus.cookie},
         ).then(
             (response)=>{
@@ -127,7 +127,7 @@ export default {
               console.log(error);
             }
         )
-        let ws = new WebSocket("wss://asdf.zhr1999.club/api/uploadListen");
+        let ws = new WebSocket("wss://groupfile.xice.wang/api/uploadListen");
         ws.onopen = ()=>{
             // Web Socket 已连接上，使用 send() 方法发送数据
             ws.send(this.$store.state.loginStatus.cookie);
@@ -153,7 +153,7 @@ export default {
     },
     methods:{
         get_svg_url(e){
-            return "https://asdf.zhr1999.club/resource/icons/"+e+".svg";
+            return "https://groupfile.xice.wang/resource/icons/"+e+".svg";
         },
         uploadFile: function (file) {
             var item = {
@@ -166,7 +166,7 @@ export default {
             fd.append('session_cookie',this.$store.state.loginStatus.cookie);
             fd.append('file', file);
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://asdf.zhr1999.club/api/upload', true);
+            xhr.open('POST', 'https://groupfile.xice.wang/api/upload', true);
             xhr.upload.addEventListener('progress', function (e) {
                 if(e.loaded==e.total)
                 item.color="#86c166"
@@ -199,7 +199,7 @@ export default {
             this.openSimple = false;
         },
         download(file_id){
-            window.open("https://asdf.zhr1999.club/api/download?session_cookie="+this.$store.state.loginStatus.cookie+"&file_id="+file_id);
+            window.open("https://groupfile.xice.wang/api/download?session_cookie="+this.$store.state.loginStatus.cookie+"&file_id="+file_id);
         },
         deletFile(file_id,type){
             this.openAlert = false;
@@ -213,7 +213,7 @@ export default {
                 }
             }
             this.$http.post(
-            "https://asdf.zhr1999.club/api/deletFile",
+            "https://groupfile.xice.wang/api/deletFile",
             {
                 'session_cookie': this.$store.state.loginStatus.cookie,
                 'file_id': file_id,

@@ -4,7 +4,7 @@ if (!global.conf) {
 if (!global.ws) {
     global.ws = { qr_scan: {}, upload: {} };
 }
-global.conf.root = "https://asdf.zhr1999.club";
+global.conf.root = "https://groupfile.xice.wang";
 global.conf.mongodb = {
     url: "mongodb://127.0.0.1:27017/groupfile",
     // url: "127.0.0.1",
