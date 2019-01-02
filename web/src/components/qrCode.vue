@@ -75,7 +75,7 @@ export default {
   mounted () {
       // TODO: 这里写ws相关.
       var that = this;
-      var ws = new WebSocket("wss://asdf.zhr1999.club/api/qrCode");
+      var ws = new WebSocket("wss://groupfile.xice.wang/api/qrCode");
     //   ws.onopen = function()
     //   {
     //      // Web Socket 已连接上，使用 send() 方法发送数据
